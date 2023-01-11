@@ -26,26 +26,28 @@ app.get('/',(req,res)=>{
         res.render('home');
 
 });
+
 app.get('/signup',(req,res)=>{
     res.render('signup');
 })
+
 app.get('/login',(req,res)=>{
     res.render('login');
 })
-app.post('/',(req,res)=>{
 
+app.post('/',(req,res)=>{
     console.log(req.body);
     res.send(req.body);
 })
 
 app.post('/signup', async(req,res)=>{
     console.log(req.body);
-    const student=await Student(req.body);
+    const student = await Student(req.body);
     await student.save();
     res.send(req.body);
 })
 
 
-app.listen(3000,()=>{
+app.listen(process.env.port || 3000,()=>{
     console.log('server connected');
 })

@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV !=='production'){
+    require('dotenv').config();
+}
 const express=require('express');
 const ejsMate=require('ejs-mate');
 const app=express();

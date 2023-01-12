@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.set('views',path.join(__dirname,'views'));
 app.use(express.static(path.join(__dirname,'public')));
-const dburl= 'mongodb://localhost:27017/conssesion';
+const dburl= process.env.MONGO_ATLAS || 'mongodb://localhost:27017/conssesion';
 mongoose.connect(dburl)
 .then( ()=>{
     console.log('connected');
@@ -22,14 +22,16 @@ mongoose.connect(dburl)
     console.log('error');
     console.log(err);
 });
-app.get('/',(req,res)=>{
-        res.render('home');
+// app.get('/',async(req,res)=>{
+//     // const student = await Student.find({});
+//     //     console.log(student);
+//         // res.render('home');
 
-});
+// });
 app.get('/signup',(req,res)=>{
     res.render('signup');
 })
-app.get('/login',(req,res)=>{
+app.get('/',(req,res)=>{
     res.render('login');
 })
 app.post('/',(req,res)=>{

@@ -24,8 +24,7 @@ app.set('views',path.join(__dirname,'views'));
 app.use(express.static(path.join(__dirname,'public')));
 // console.log(process.env.MONGOATLAS);
 const dburl= process.env.MONGO_ATLAS;
-// const dburl="mongodb+srv://RailGhateMein:ihPZKxQF1lteAAPY@cluster0.wvcuh1x.mongodb.net/?retryWrites=true&w=majority";
-//  || 'mongodb://localhost:27017/conssesion';
+
 const secret=process.env.SECREAT;
 mongoose.connect(dburl)
 .then( ()=>{

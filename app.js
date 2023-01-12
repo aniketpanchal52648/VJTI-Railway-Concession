@@ -18,8 +18,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.set('views',path.join(__dirname,'views'));
 app.use(express.static(path.join(__dirname,'public')));
-const dburl= process.env.MONGO_ATLAS || 'mongodb://localhost:27017/conssesion';
-const secret=process.env.SECREAT;
+// const dburl= process.env.MONGO_ATLAS || 'mongodb://localhost:27017/conssesion';
+const dburl = "mongodb+srv://RailGhateMein:ihPZKxQF1lteAAPY@cluster0.wvcuh1x.mongodb.net/?retryWrites=true&w=majority";
+const secret = process.env.SECREAT;
 mongoose.connect(dburl)
 .then( ()=>{
     console.log('connected');
@@ -68,10 +69,10 @@ app.get('/signup',(req,res)=>{
 app.get('/',(req,res)=>{
     res.render('login');
 })
-app.post('/login', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
+app.post('/application', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
 
     console.log('success');
-    res.send('login success');
+    res.render('application');
 })
 app.get('/institute_login',(req,res)=>{
     res.render('institute_login');
@@ -88,7 +89,9 @@ app.post('/signup', async(req,res)=>{
         const user = new Student({ email, username });
         const registeredStudent = await Student.register(user, password);
         req.login(registeredStudent, err => {
-            if (err) return next(err);
+            if (err){
+                return next(err);
+            } 
             // req.flash('success', 'Welcom!!!');
             // res.redirect('/home');
             res.send(registeredStudent);
@@ -98,4 +101,5 @@ app.post('/signup', async(req,res)=>{
 
 app.listen(3000,()=>{
     console.log('server connected');
+    console.log(process.env.key);
 })

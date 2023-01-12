@@ -22,16 +22,16 @@ mongoose.connect(dburl)
     console.log('error');
     console.log(err);
 });
-app.get('/',(req,res)=>{
-        res.render('home');
+// app.get('/',(req,res)=>{
+//         res.render('home');
 
-});
+// });
 
 app.get('/signup',(req,res)=>{
     res.render('signup');
 })
 
-app.get('/login',(req,res)=>{
+app.get('/',(req,res)=>{
     res.render('login');
 })
 

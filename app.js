@@ -68,14 +68,16 @@ app.get('/signup',(req,res)=>{
 app.get('/',(req,res)=>{
     res.render('login');
 })
-app.get('/institute_login',(req,res)=>{
-    res.render('institute_login');
-})
-app.post('/',(req,res)=>{
+app.post('/login', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
 
-    // console.log(req.body);
+    console.log('success');
     res.send('login success');
 })
+app.get('/institute_login',(req,res)=>{
+    res.render('institute_login');
+});
+
+
 
 app.post('/signup', async(req,res)=>{
     console.log(req.body);

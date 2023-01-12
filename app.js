@@ -15,16 +15,18 @@ const session=require('express-session');
 const flash=require('connect-flash');
 
 
-
 app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.set('views',path.join(__dirname,'views'));
+// dis advantage server site rentring
 app.use(express.static(path.join(__dirname,'public')));
-
-const dburl= process.env.MONGO_ATLAS || 'mongodb://localhost:27017/conssesion';
-const secret = process.env.SECREAT;
+// console.log(process.env.MONGOATLAS);
+const dburl= process.env.MONGO_ATLAS;
+// const dburl="mongodb+srv://RailGhateMein:ihPZKxQF1lteAAPY@cluster0.wvcuh1x.mongodb.net/?retryWrites=true&w=majority";
+//  || 'mongodb://localhost:27017/conssesion';
+const secret=process.env.SECREAT;
 mongoose.connect(dburl)
 .then( ()=>{
     console.log('connected');
@@ -93,9 +95,7 @@ app.post('/signup', async(req,res)=>{
         const user = new Student({ email, username });
         const registeredStudent = await Student.register(user, password);
         req.login(registeredStudent, err => {
-            if (err){
-                return next(err);
-            } 
+            if (err) return next(err);
             // req.flash('success', 'Welcom!!!');
             // res.redirect('/home');
             res.send(registeredStudent);
@@ -105,5 +105,4 @@ app.post('/signup', async(req,res)=>{
 
 app.listen(3000,()=>{
     console.log('server connected');
-    console.log(process.env.key);
 })

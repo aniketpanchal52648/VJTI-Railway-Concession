@@ -68,14 +68,10 @@ app.get('/signup',(req,res)=>{
 app.get('/',(req,res)=>{
     res.render('login');
 })
-<<<<<<< HEAD
-app.post('/login',passport.authenticate('local',{failureFlash:true,failureRedirect:'/signup'}),(req,res)=>{
-=======
 app.get('/institute_login',(req,res)=>{
     res.render('institute_login');
 })
 app.post('/',(req,res)=>{
->>>>>>> 229f222a7373ab85dd8a69576890024fe6934f1e
 
     // console.log(req.body);
     res.send('login success');

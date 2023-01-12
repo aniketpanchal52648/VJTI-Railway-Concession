@@ -13,3 +13,7 @@ height: calc(100% - 73px);
 height: 100%;
 }
 }
+.heading-login{
+    color: #205295;
+    font-weight: bold;
+}

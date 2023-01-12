@@ -20,8 +20,12 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.set('views',path.join(__dirname,'views'));
+// dis advantage server site rentring
 app.use(express.static(path.join(__dirname,'public')));
-const dburl= process.env.MONGO_ATLAS || 'mongodb://localhost:27017/conssesion';
+// console.log(process.env.MONGOATLAS);
+const dburl= process.env.MONGO_ATLAS;
+// const dburl="mongodb+srv://RailGhateMein:ihPZKxQF1lteAAPY@cluster0.wvcuh1x.mongodb.net/?retryWrites=true&w=majority";
+//  || 'mongodb://localhost:27017/conssesion';
 const secret=process.env.SECREAT;
 mongoose.connect(dburl)
 .then( ()=>{
@@ -71,10 +75,10 @@ app.get('/signup',(req,res)=>{
 app.get('/',(req,res)=>{
     res.render('login');
 })
-app.post('/login', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
+app.post('/application', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
 
     console.log('success');
-    res.send('login success');
+    res.render('application');
 })
 app.get('/institute_login',(req,res)=>{
     res.render('institute_login');

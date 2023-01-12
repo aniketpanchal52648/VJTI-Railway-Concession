@@ -34,6 +34,9 @@ app.get('/signup',(req,res)=>{
 app.get('/',(req,res)=>{
     res.render('login');
 })
+app.get('/institute_login',(req,res)=>{
+    res.render('institute_login');
+})
 app.post('/',(req,res)=>{
 
     console.log(req.body);

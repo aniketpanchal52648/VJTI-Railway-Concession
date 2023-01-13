@@ -226,7 +226,8 @@ app.get('/institute_login', async(req,res)=>{
 
 
 app.post('/signup', async(req,res)=>{
-    console.log(req.body);
+    try {
+        console.log(req.body);
     // const student=await Student(req.body);
     // await student.save();
     // res.send(req.body);
@@ -242,11 +243,16 @@ app.post('/signup', async(req,res)=>{
                 to: registeredStudent.email,
                 subject: "Registration Successful",
                 // text: "Testing mail sending using NodeJS"
-                html: `<p>Dear User, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
+                html: `<p>Dear ${registeredStudent.first_name} ${registeredStudent.last_name}, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
             };
             sendMail(mailOptions);
-            res.send(registeredStudent);
+            res.render('login');
+
         })
+    } catch (error) {
+        
+    }
+    
 })
 app.get('/view',(req,res)=>{
     res.render('view');

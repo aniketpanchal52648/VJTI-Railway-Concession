@@ -108,22 +108,22 @@
 
                   <div class="input-field showAfter">
                     <label>Season Ticket Number</label>
-                    <input name="STN" type="number" min="0" placeholder="Season Ticket Number" required />
+                    <input name="STN" type="number" min="0" placeholder="Season Ticket Number"  />
                   </div>
                   <div class="input-field showAfter">
                     <label>Date from: </label>
-                    <input name="dateFromPass" type="date" placeholder="Date from: " required />
+                    <input name="dateFromPass" type="date" placeholder="Date from: "  />
                   </div>
                   <div class="input-field showAfter">
                     <label>Date to: </label>
-                    <input name="datetoPass" type="date" placeholder="Date to: " required />
+                    <input name="datetoPass" type="date" placeholder="Date to: "  />
                   </div>
                   <div class="input-field showAfter">
                     <label>Previous Ticket Pass </label>
-                    <input name="file_STN" type="file" accept="image/png, image/jpeg, image/jpg" required />
+                    <input name="fileSTN" type="file" accept="image/png, image/jpeg, image/jpg"  />
                   </div>
   
-              <button onclick="getOption()" type="submit" class="nextBtn">
+              <button type="submit" class="nextBtn">
                 <span class="btnText">Submit</span>
                 <i class="uil uil-navigator"></i>
               </button>
@@ -136,20 +136,20 @@
         for(let i = 0; i < ele.length; i++){
             ele[i].style.display = "none";
         }
-        function getOption() {
-            const selectElement = document.querySelector('.check');
-            
-            
-    }
-    function get(select) {
-        const selectElement = document.querySelector('.check');
-      let value = select.value;
-      if(value === "yes"){            
-                for(let i = 0; i < ele.length; i++){
-                    ele[i].style.display = "block";
+        function get(select) {
+            let value = select.value;
+        if(value === "yes"){            
+                    for(let i = 0; i < ele.length; i++){
+                        ele[i].style.display = "block";
+                        ele[i].required = true;
+                    }
+                } else if(value === "no") {
+                    for(let i = 0; i < ele.length; i++){
+                        ele[i].style.display = "none";
+                        ele[i].required = false;
+                    }
                 }
             }
-        }
       </script>
 </body>
 

@@ -2,79 +2,67 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Documents</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Documents</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+  <link rel="stylesheet" href="/stylesheets/docstyle.css">
 </head>
-<body>
-           
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/application">Home</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                  <a class="nav-link" href="/application">Basic Details</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/concession-details">Concession Details</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Upload Document</a>
-                  </li>
-              
-            </ul>
-            
-          </div>
-      </nav>
 
-      <form>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Name</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="name">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputPassword4">LastName</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="LastName">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputAddress">Address</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="form-group">
-          <label for="inputAddress2">Address 2</label>
-          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="inputState">State</label>
-            <select id="inputState" class="form-control">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-              Check me out
-            </label>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Next</button>
-      </form>
+<body>
+  <div style="display: block">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/application">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/application">Basic Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/concession-details">Concession Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">Upload Document</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <form action="/application/uploaddoc/<%= st._id %> " method="post">
+    <div class="main-container">
+      <div class="input-div">
+        <p class="input-header">Aadhaar Card</p>
+        <input type="file" class="custom-file-input" name="image1" id="image1" >
+      </div>
+      <div class="input-div">
+        <p class="input-header">College ID/ Allotment Letter</p>
+        <input type="file" class="custom-file-input" name="image2" id="image2" >
+      </div>
+      <% if( !(st.caste.toUpperCase() === "OPEN" || st.caste.toUpperCase() === "OBC") ) { %>
+      <div class="input-div">
+        <p class="input-header">Caste Validity</p>        
+        <input type="file" class="custom-file-input" name="image3" id="image3" >
+      </div>    
+      <% } %>
+      
+    
+      <button type="submit" class="nextBtn">
+        <span class="btnText">Next</span>
+        <i class="uil uil-navigator"></i>
+      </button>
+    </div> 
+  </form>
+
+  <script>
+  </script>
 
 </body>
 

@@ -1,6 +1,3 @@
-if(process.env.NODE_ENV !=='production'){
-    require('dotenv').config();
-}
 const express=require('express');
 const ejsMate=require('ejs-mate');
 const app=express();
@@ -14,6 +11,7 @@ const passportLocal=require('passport-local');
 const session=require('express-session');
 const flash=require('connect-flash');
 
+require('dotenv').config(); //dotenv package
 
 app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
@@ -88,7 +86,9 @@ app.get('/accepted',(req,res)=>{
     res.render('accepted');
 })
 
+
 app.post('/application', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
+
 
     console.log('success');
     res.render('application');

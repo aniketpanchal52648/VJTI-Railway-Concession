@@ -168,12 +168,11 @@ app.post('/signup', async(req,res)=>{
             res.send(registeredStudent);
         })
 })
-
+app.get('/view',(req,res)=>{
+    res.render('view');
+})
 
 app.listen(3000,()=>{
     console.log('server connected');
 })
 
-app.get('/view',(req,res)=>{
-    res.render('view');
-})

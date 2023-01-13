@@ -214,12 +214,12 @@ app.post('/application',passport.authenticate('local',{failureFlash:true,failure
     // req.flash('success',"welcome!!!");
     res.render('application',{student});
 });
-app.get('/con',(req,res)=>{
-    res.render('concession-details');
-})
-app.post('/con',async(req,res)=>{
-    res.send(req.body);
-})
+// app.get('/con',(req,res)=>{
+//     res.render('concession-details');
+// })
+// app.post('/con',async(req,res)=>{
+//     res.send(req.body);
+// })
 app.post('/application/basicdetails', isLoggedIn,async(req,res)=>{
     // console.log(req.body);
     const user= await Student.findOne({username:req.body.reg_no});
@@ -249,10 +249,24 @@ app.get('/application/uploaddoc/:id', async(req,res)=>{
     res.render('documents',{st});
 })
 app.post('/application/uploaddoc/:id',upload.array('image',3),async(req,res)=>{
-    const student=await Student.findById(req.params._id);
-    // console.log(req.files);
+    // const student=await Student.findById(req.params._id);
+    // console.log(req.files[0]);
     // res.send('done');
     // res.render('concession-details',{student});
+    // student.adhar_card.url=req.files[0].path;
+    // student.adhar_card.filename=req.files[0].filename;
+    // student.collge_Detail.url=req.files[1].path;
+    // student.college_Detail.filename=req.files[1].filename;
+
+    // if(req.files[2].path){
+    //     student.caste_validity.url=req.files[2].path;
+    // student.caste_validity.filename=req.files[2].filename;
+    // }
+    images = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    const student=await Student.findByIdAndUpdate({_id:req.params.id},{images});
+    // await student.save();
+    // res.send('done');
+    // console.log(student.images);
     res.redirect(`/application/conssesion/${req.params.id}`);
     // student.
         
@@ -260,14 +274,19 @@ app.post('/application/uploaddoc/:id',upload.array('image',3),async(req,res)=>{
 })
 app.get('/application/conssesion/:id',async(req,res)=>{
 
-    const student=await Student.findById(req.params._id);
+    const student=await Student.findById(req.params.id);
     // console.log(req.files);
     // res.send('done');
     res.render('concession-details',{student});
 })
-app.post('/application/conssesion',async(req,res)=>{
-    const student=await Student.findById(req.params._id);
-    
+app.post('/application/conssesion/:id',async(req,res)=>{
+    // const student=await Student.findByIdAndUpdate({_id:req.params._id},{...req.body});
+    const request=await Request({...req.body});
+
+    console.log(request);
+    // res.send('done');
+    res.redirect('/application');
+
 
 })
 app.get('/logout',isLoggedIn ,async (req,res)=>{

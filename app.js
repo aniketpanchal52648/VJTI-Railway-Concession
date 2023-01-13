@@ -151,9 +151,17 @@ app.get('/logout', async (req,res)=>{
 app.post('/application/basic', async (req,res)=>{
 
 })
+
+
+app.get('/concession-details',(req,res)=>{
+    res.render('concession-details');
+})
+app.get('/documents',(req,res)=>{
+    res.render('documents');
+})
+
+
 app.get('/institute_login', async(req,res)=>{
-    
-    
 
     res.render('institute_login');
 });

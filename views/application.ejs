@@ -43,8 +43,15 @@
                 >Concession Details</a
               >
             </li>
-            <li class="nav-item">
+           
+              
+            
               <a class="nav-link" href="/documents">Upload Document</a>
+
+              <a class="nav-link" href="/status">Status</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
             </li>
           </ul>
         </div>
@@ -54,7 +61,7 @@
     <div class="container" style="display: block">
       <header>Registration</header>
 
-      <form action="#">
+      <form action="/application/basicdetails" method="post">
         <div class="form first">
           <div class="details personal">
             <span class="title">Personal Details</span>
@@ -62,22 +69,22 @@
             <div class="fields">
               <div class="input-field">
                 <label>First Name</label>
-                <input type="text" placeholder="Enter your name" required />
-              </div>
-
-              <div class="input-field">
-                <label>Middle Name</label>
-                <input type="text" placeholder="Enter your name" required />
+                <input type="text" placeholder="Enter your name" required name="first_name" />
               </div>
 
               <div class="input-field">
                 <label>Last Name</label>
-                <input type="text" placeholder="Enter your name" required />
+                <input type="text" placeholder="Enter your name" required name="last_name" />
+              </div>
+
+              <div class="input-field">
+                <label>Middle Name</label>
+                <input type="text" placeholder="Enter your name" required name="middle_name" />
               </div>
 
               <div class="input-field">
                 <label>Date of Birth</label>
-                <input type="date" placeholder="Enter birth date" required />
+                <input type="date" placeholder="Enter birth date" required  name="DOB"/>
               </div>
 
               <div class="input-field">
@@ -86,6 +93,7 @@
                   type="number"
                   placeholder="Enter mobile number"
                   required
+                  name="phone"
                 />
               </div>
 
@@ -118,7 +126,7 @@
             <div class="fields">
               <div class="input-field">
                 <label>Reg. No/Enrollment No</label>
-                <input type="text" placeholder="Enter ID type" required />
+                <input type="text" placeholder="Enter ID type" required name="reg_no"/>
               </div>
 
               <div class="input-field">

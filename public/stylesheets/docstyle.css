@@ -5,12 +5,16 @@
     margin-bottom: 2.5rem;
 }
 
+.inside {
+    align-items: center;
+}
+
 .input-header {
-    display: inline-block;
-    text-align: center;
+    display: block;
+    margin: auto;
     font-size: 1.5rem;
-    font-weight: 700;
-    margin-right: 0.5rem;
+    font-weight: 700;    
+    padding: 0.5rem;
 }
 
 .input-div {
@@ -18,6 +22,11 @@
     align-items: center;
     margin: 1rem;
     padding: 1rem;
+}
+
+input {
+    display: block;
+    margin: auto;
 }
 
 form button {

@@ -43,14 +43,13 @@
                 >Concession Details</a
               >
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/upload">Upload Document</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
-              </li>
+           
+              
             
               <a class="nav-link" href="/documents">Upload Document</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
             </li>
           </ul>
         </div>
@@ -60,7 +59,7 @@
     <div class="container" style="display: block">
       <header>Registration</header>
 
-      <form action="#">
+      <form action="/application/basicdetails" method="post">
         <div class="form first">
           <div class="details personal">
             <span class="title">Personal Details</span>
@@ -68,22 +67,22 @@
             <div class="fields">
               <div class="input-field">
                 <label>First Name</label>
-                <input type="text" placeholder="Enter your name" required />
+                <input type="text" placeholder="Enter your name" required name="first_name" />
               </div>
 
               <div class="input-field">
                 <label>Last Name</label>
-                <input type="text" placeholder="Enter your name" required />
+                <input type="text" placeholder="Enter your name" required name="last_name" />
               </div>
 
               <div class="input-field">
                 <label>Middle Name</label>
-                <input type="text" placeholder="Enter your name" required />
+                <input type="text" placeholder="Enter your name" required name="middle_name" />
               </div>
 
               <div class="input-field">
                 <label>Date of Birth</label>
-                <input type="date" placeholder="Enter birth date" required />
+                <input type="date" placeholder="Enter birth date" required  name="DOB"/>
               </div>
 
               <div class="input-field">
@@ -92,6 +91,7 @@
                   type="number"
                   placeholder="Enter mobile number"
                   required
+                  name="phone"
                 />
               </div>
 
@@ -107,7 +107,7 @@
 
               <div class="input-field">
                 <label>Caste</label>
-                <select required>
+                <select required name="caste">
                   <option disabled selected>Select Caste</option>
                   <option>Open</option>
                   <option>OBC</option>
@@ -124,12 +124,12 @@
             <div class="fields">
               <div class="input-field">
                 <label>Reg. No/Enrollment No</label>
-                <input type="text" placeholder="Enter ID type" required />
+                <input type="text" placeholder="Enter ID type" required name="reg_no"/>
               </div>
 
               <div class="input-field">
                 <label>Year</label>
-                <select required>
+                <select required name="year">
                   <option disabled selected>Year of Study</option>
                   <option>First</option>
                   <option>Second</option>
@@ -140,7 +140,7 @@
 
               <div class="input-field">
                 <label>Semester</label>
-                <select required>
+                <select required name="semester">
                   <option disabled selected>Current Semester</option>
                   <option>I</option>
                   <option>II</option>
@@ -155,7 +155,7 @@
 
               <div class="input-field">
                 <label>Program</label>
-                <select required>
+                <select required name="programe">
                   <option disabled selected>Select Program</option>
                   <option>B.Tech</option>
                   <option>M.Tech</option>
@@ -167,7 +167,7 @@
 
               <div class="input-field">
                 <label>Department</label>
-                <select required>
+                <select required name="dept">
                   <option disabled selected>Select Department</option>
                   <option>Computer Science</option>
                   <option>Information Technology</option>

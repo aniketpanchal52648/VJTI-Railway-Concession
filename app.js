@@ -13,6 +13,8 @@ const flash=require('connect-flash');
 const {isLoggedIn}=require('./middleware');
 const Reuqest=require('./models/requestSchema');
 const {sendMail}=require('./gmail/register');
+const {storage}=require('../cloudanary/index');
+const upload=multer({storage});
 
 
 require('dotenv').config(); //dotenv package
@@ -138,14 +140,63 @@ app.get('/accepted',(req,res)=>{
 })
 
 
-app.get('/application/', isLoggedIn,passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
+app.post('/application/',passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}), async(req,res)=>{
 
 
-    console.log('success');
+    console.log(req.body);
+    const user=req.body.username;
+    const student=await Student.find({username:user});
+    console.log(student)
+
+
     // req.flash('success',"welcome!!!");
-    res.render('application');
+    res.render('application',{student});
 })
-app.get('/logout', async (req,res)=>{
+app.post('/application/basicdetails', isLoggedIn,async(req,res)=>{
+    // console.log(req.body);
+    const user= await Student.find({username:req.body.reg_no});
+    // console.log(user[0]);
+    const id=user[0]._id;
+    // console.log((id));
+    // await Student.update({_id:req.body.reg_name},{$set:{...req.body}});
+    // const st=Student.find({_id:req.body.reg_name});
+    // console.log(st);
+    // // console.log(user);
+    const st=await Student.findByIdAndUpdate({_id:id},{...req.body},{
+        returnOriginal:false
+    })
+    const caste=st.caste;
+
+    // res.send(1);
+    res.redirect(`/application/${st._id}/uploaddoc`);
+    
+
+
+
+})
+app.get('/application/:id/uploaddoc', async(req,res)=>{
+    const st=await Student.findById(req.params);
+    const caste=st.caste
+    res.render('documents',{st});
+})
+app.post('/application/:id/uploaddoc',upload.array('images'),async(req,res)=>{
+    const student=await Student.findById(req.params);
+    student.
+        
+
+})
+app.get('/logout',isLoggedIn ,async (req,res)=>{
+    req.logout(function (err) {
+        if (err) {
+            // req.flash('error', 'something went wrong');
+            return res.redirect('/');
+
+        }
+
+
+        // req.flash('success', 'Goodbye!!');
+        res.redirect('/');
+    });
     
 })
 app.post('/application/basic', async (req,res)=>{

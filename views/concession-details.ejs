@@ -54,7 +54,7 @@
                 <div class="input-field">
                   <label>Railway Line</label>
                   <select required>
-                    <option disabled selected>Select</option>
+                    <option value="">Select</option>
                     <option>Western</option>
                     <option>Central</option>
                     <option>Harbour</option>
@@ -70,7 +70,7 @@
                 <div class="input-field">
                     <label>Destination Station</label>
                     <select required>
-                        <option disabled selected>Select</option>
+                        <option value="">Select</option>
                         <option>Matunga</option>
                         <option>Dadar</option>
                         <option>Matunga Road</option>
@@ -82,7 +82,7 @@
                   <div class="input-field">
                     <label>Train Class</label>
                     <select required>
-                        <option disabled selected>Select</option>
+                        <option value="">Select</option>
                         <option>Ist Class</option>
                         <option>IIst Class</option>
                       </select>
@@ -91,21 +91,61 @@
                   <div class="input-field">
                     <label>Period</label>
                     <select required>
-                        <option disabled selected>Select</option>
+                        <option value="">Select</option>
                         <option>Monthly</option>
                         <option>Quaterly</option>
                       </select>
                   </div>
+
+                  <div class="input-field">
+                    <label>Are you applying for Renewal??</label>
+                    <select class="check" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                      </select>
+                  </div>
+
+                  <div class="input-field showAfter">
+                    <label>Season Ticket Number</label>
+                    <input name="STN" type="number" min="0" placeholder="Season Ticket Number" required />
+                  </div>
+                  <div class="input-field showAfter">
+                    <label>Date from: </label>
+                    <input name="dateFromPass" type="date" placeholder="Date from: " required />
+                  </div>
+                  <div class="input-field showAfter">
+                    <label>Date to: </label>
+                    <input name="datetoPass" type="date" placeholder="Date to: " required />
+                  </div>
+                  <div class="input-field showAfter">
+                    <label>Previous Ticket Pass </label>
+                    <input name="file_STN" type="file" accept="image/png, image/jpeg, image/jpg" required />
+                  </div>
   
-              <button class="nextBtn">
-                <span class="btnText">Next</span>
+              <button onclick="getOption()" type="submit" class="nextBtn">
+                <span class="btnText">Submit</span>
                 <i class="uil uil-navigator"></i>
               </button>
             </div>
           </div>
         </form>
       </div>
-  
+      <script>
+        const ele = document.querySelectorAll(".showAfter");
+        for(let i = 0; i < ele.length; i++){
+            ele[i].style.display = "none";
+        }
+        function getOption() {
+            const selectElement = document.querySelector('.check');
+            
+            if(selectElement.value === "yes"){            
+                for(let i = 0; i < ele.length; i++){
+                    ele[i].style.display = "block";
+                }
+            }
+    }
+      </script>
 </body>
 
 </html>

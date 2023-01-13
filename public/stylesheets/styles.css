@@ -143,8 +143,8 @@ form .backBtn i{
 form .backBtn i{
     transform: rotate(180deg);
 }
-form .buttons{
-    display: flex;
+form button{
+    display: block;
     align-items: center;
 }
 form .buttons button , .backBtn{

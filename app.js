@@ -12,6 +12,7 @@ const session=require('express-session');
 const flash=require('connect-flash');
 const {isLoggedIn}=require('./middleware');
 const Reuqest=require('./models/requestSchema');
+const {sendMail}=require('./gmail/register');
 
 require('dotenv').config(); //dotenv package
 
@@ -156,6 +157,14 @@ app.post('/signup', async(req,res)=>{
             if (err) return next(err);
             // req.flash('success', 'Welcom!!!');
             // res.redirect('/home');
+            const mailOptions = {
+                from: "vjtirailwayconcession@gmail.com",
+                to: registeredStudent.email,
+                subject: "Registration Successful",
+                // text: "Testing mail sending using NodeJS"
+                html: `<p>Dear User, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
+            };
+            sendMail(mailOptions);
             res.send(registeredStudent);
         })
 })

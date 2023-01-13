@@ -1,6 +1,3 @@
-if(process.env.NODE_ENV !=='production'){
-    require('dotenv').config();
-}
 const express=require('express');
 const ejsMate=require('ejs-mate');
 const app=express();
@@ -14,6 +11,7 @@ const passportLocal=require('passport-local');
 const session=require('express-session');
 const flash=require('connect-flash');
 
+require('dotenv').config(); //dotenv package
 
 app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
@@ -76,6 +74,7 @@ app.get('/',(req,res)=>{
     res.render('login');
 })
 
+
 app.get('/abc',(req,res)=>{
     res.render('institute_view');
 })
@@ -88,10 +87,12 @@ app.get('/accepted',(req,res)=>{
     res.render('accepted');
 })
 
-app.post('/login', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
+
+app.post('/application', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
+
 
     console.log('success');
-    res.send('login success');
+    res.render('application');
 })
 app.get('/institute_login',(req,res)=>{
     res.render('institute_login');

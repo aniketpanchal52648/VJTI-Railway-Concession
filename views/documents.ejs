@@ -32,30 +32,33 @@
           <li class="nav-item">
             <a class="nav-link" href="">Upload Document</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
         </ul>
       </div>
     </nav>
   </div>
-  <form action="/application/uploaddoc/<%= st._id %> " method="post">
+  <form action="/application/uploaddoc/<%= st._id %> " method="post" enctype="multipart/form-data">
     <div class="main-container">
       <div class="inside">
         <div class="input-div">
           <p class="input-header">Aadhaar Card</p>
           <div>
-            <input type="file" accept="image/png, image/jpg, image/jpeg"/>
+            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" required/>
           </div>
         </div>
         <div class="input-div">
           <p class="input-header">College ID/ Allotment Letter</p>
           <div>
-            <input type="file" accept="image/png, image/jpg, image/jpeg"/>
+            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" required/>
           </div>        
         </div>
-        <% if( !(caste.toUpperCase() === "OPEN" || caste.toUpperCase() === "OBC") ) { %>
+        <% if( !(st.caste.toUpperCase() === "OPEN" || st.caste.toUpperCase() === "OBC") ) { %>
         <div class="input-div">
           <p class="input-header">Caste Validity</p>    
           <div>
-            <input type="file" accept="image/png, image/jpg, image/jpeg"/>
+            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" required />
           </div>  
         </div>    
         <% } %>

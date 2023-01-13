@@ -19,47 +19,47 @@
             <tbody>
             <tr>
                 <th>Name</th>
-                <td colspan="3">Roshan</td>
+                <td colspan="3"><%= reqs.student.first_name %>  <%= reqs.student.last_name %> </td>
             </tr>
            
             <tr>
                 <th>Registration no.</th>
-                <td colspan="1">201060000</td>
+                <td colspan="1"><%= reqs.student.reg_no %> </td>
                 <th>Birthdate</th>
-                <td colspan="1">10/11/12</td>
+                <td colspan="1"><%= reqs.student.DOB %></td>
             </tr>
             
                 <tr>
                     <th>Address</th>
-                    <td colspan="3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolor atque facilis maxime corporis accusantium!</td>
+                    <td colspan="3"><%= reqs.address %></td>
                 </tr>
             
                 <tr>
                     <th>Gender</th>
-                    <td colspan="1">Male</td>
+                    <td colspan="1"><%= reqs.gender %> </td>
                     <th>Name of Course</th>
                     <td colspan="1">Diploma or degree</td>
                 </tr>
             
                 <tr>
                     <th>Pass duration</th>
-                    <td colspan="1">Monthly</td>
+                    <td colspan="1"><%=   reqs.duration%></td>
                     <th>Class</th>
-                    <td colspan="1">1st</td>
+                    <td colspan="1"><%=  reqs.student.year%></td>
                 </tr>
             
                 <tr>
                     <th>From</th>
-                    <td colspan="1">Thane</td>
+                    <td colspan="1"><%=  reqs.starting %></td>
                     <th>To</th>
-                    <td colspan="1">Dadar</td>
+                    <td colspan="1"><%=   reqs.destination%></td>
                 </tr>
            
                 <tr>
                     <th>Caste</th>
-                    <td colspan="1">Open</td>
+                    <td colspan="1"><%=   reqs.student.caste%></td>
                     <th>Mobile No.</th>
-                    <td colspan="1">9867598675</td>
+                    <td colspan="1"><%= reqs.student.phone %> </td>
                 </tr>
             </tbody>
         </table>
@@ -98,8 +98,13 @@
 
         <table class="table">
             <tr>
-                <td style="text-align: center;"><button type="button" class="btn btn-primary btn-lg" >Accepted</button>
-                <a href="/rejected"><button type="button" class="btn btn-danger mx-5 btn-lg" >Reverted</button></a></td>
+                <td style="text-align: center;">
+                    <form action="accepted/<%= reqs._id %>" method="post">
+
+                    
+                    <button type="submit" class="btn btn-primary btn-lg" >Accepted</button>
+                </form>
+               <a  href="reverted/<%= reqs._id %> "> <button type="button" class="btn btn-danger mx-5 btn-lg" >Reverted</button></a></td>
             </tr>
         </table>
         

@@ -262,4 +262,7 @@ app.post('/institute_login',(req,res)=>{
 app.listen(3000,()=>{
     console.log('server connected');
 })
+app.get('/status',(req,res)=>{
+    res.render('status');
+})
 

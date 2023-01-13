@@ -78,6 +78,15 @@ app.post('/application', passport.authenticate('local',{failureFlash:true,failur
     console.log('success');
     res.render('application');
 })
+app.get('/application',(req,res)=>{
+    res.render('application');
+})
+app.get('/concession-details',(req,res)=>{
+    res.render('concession-details');
+})
+app.get('/documents',(req,res)=>{
+    res.render('documents');
+})
 app.get('/institute_login',(req,res)=>{
     res.render('institute_login');
 });

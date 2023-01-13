@@ -10,6 +10,7 @@ const passport=require('passport');
 const passportLocal=require('passport-local');
 const session=require('express-session');
 const flash=require('connect-flash');
+const {isLoggedIn}=require('./middleware');
 
 require('dotenv').config(); //dotenv package
 

@@ -202,7 +202,7 @@ res.redirect('/institute_view');
 
 
 })
-app.post('/application/',passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}), async(req,res)=>{
+app.post('/application',passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}), async(req,res)=>{
 
 
     console.log(req.body);
@@ -213,6 +213,12 @@ app.post('/application/',passport.authenticate('local',{failureFlash:true,failur
 
     // req.flash('success',"welcome!!!");
     res.render('application',{student});
+});
+app.get('/con',(req,res)=>{
+    res.render('concession-details');
+})
+app.post('/con',async(req,res)=>{
+    res.send(req.body);
 })
 app.post('/application/basicdetails', isLoggedIn,async(req,res)=>{
     // console.log(req.body);

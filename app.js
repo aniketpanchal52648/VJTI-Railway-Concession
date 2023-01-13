@@ -250,10 +250,24 @@ app.get('/application/uploaddoc/:id', async(req,res)=>{
 })
 app.post('/application/uploaddoc/:id',upload.array('image',3),async(req,res)=>{
     const student=await Student.findById(req.params._id);
-    console.log(req.files);
-    res.send('done');
+    // console.log(req.files);
+    // res.send('done');
+    // res.render('concession-details',{student});
+    res.redirect(`/application/conssesion/${req.params.id}`);
     // student.
         
+
+})
+app.get('/application/conssesion/:id',async(req,res)=>{
+
+    const student=await Student.findById(req.params._id);
+    // console.log(req.files);
+    // res.send('done');
+    res.render('concession-details',{student});
+})
+app.post('/application/conssesion',async(req,res)=>{
+    const student=await Student.findById(req.params._id);
+    
 
 })
 app.get('/logout',isLoggedIn ,async (req,res)=>{
@@ -275,9 +289,7 @@ app.get('/logout',isLoggedIn ,async (req,res)=>{
 // })
 
 
-app.get('/concession-details',(req,res)=>{
-    res.render('concession-details');
-})
+
 // app.get('/documents',(req,res)=>{
 //     res.render('documents', {caste: "SC"});
 

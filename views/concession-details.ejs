@@ -11,7 +11,7 @@
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
-    <link rel="stylesheet" href="stylesheets/styles.css" />
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
 </head>
 <body>
            
@@ -41,7 +41,7 @@
       <div class="container" style="display: block">
         <header>Concession Details</header>
   
-        <form action="/con" method="post">
+        <form action="/application.conssesion" method="post">
           <div class="form first">
             <div class="details personal">
   
@@ -99,7 +99,7 @@
 
                   <div class="input-field">
                     <label>Are you applying for Renewal??</label>
-                    <select class="check" required >
+                    <select onchange="get(this)" class="check" required>
                         <option value="">Select</option>
                         <option value="yes">Yes</option>
                         <option value="no">No</option>
@@ -139,12 +139,17 @@
         function getOption() {
             const selectElement = document.querySelector('.check');
             
-            if(selectElement.value === "yes"){            
+            
+    }
+    function get(select) {
+        const selectElement = document.querySelector('.check');
+      let value = select.value;
+      if(value === "yes"){            
                 for(let i = 0; i < ele.length; i++){
                     ele[i].style.display = "block";
                 }
             }
-    }
+        }
       </script>
 </body>
 

@@ -142,7 +142,8 @@ app.get('/concession-details',(req,res)=>{
     res.render('concession-details');
 })
 app.get('/documents',(req,res)=>{
-    res.render('documents');
+    res.render('documents', {caste: "SC"});
+
 })
 
 
@@ -150,7 +151,6 @@ app.get('/institute_login', async(req,res)=>{
 
     res.render('institute_login');
 });
-
 
 
 app.post('/signup', async(req,res)=>{

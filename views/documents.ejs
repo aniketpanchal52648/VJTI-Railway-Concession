@@ -45,20 +45,20 @@
         <div class="input-div">
           <p class="input-header">Aadhaar Card</p>
           <div>
-            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image"/>
+            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" required/>
           </div>
         </div>
         <div class="input-div">
           <p class="input-header">College ID/ Allotment Letter</p>
           <div>
-            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image"/>
+            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" required/>
           </div>        
         </div>
         <% if( !(st.caste.toUpperCase() === "OPEN" || st.caste.toUpperCase() === "OBC") ) { %>
         <div class="input-div">
           <p class="input-header">Caste Validity</p>    
           <div>
-            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" />
+            <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" required />
           </div>  
         </div>    
         <% } %>

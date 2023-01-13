@@ -136,9 +136,17 @@ app.post('/application', isLoggedIn,passport.authenticate('local',{failureFlash:
     console.log('success');
     res.render('application');
 })
+
+
+app.get('/concession-details',(req,res)=>{
+    res.render('concession-details');
+})
+app.get('/documents',(req,res)=>{
+    res.render('documents');
+})
+
+
 app.get('/institute_login', async(req,res)=>{
-    
-    
 
     res.render('institute_login');
 });

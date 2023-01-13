@@ -266,4 +266,7 @@ app.get('/rejected',(req,res)=>{
 app.listen(3000,()=>{
     console.log('server connected');
 })
+app.get('/status',(req,res)=>{
+    res.render('status');
+})
 

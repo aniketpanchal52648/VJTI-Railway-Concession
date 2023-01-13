@@ -9,7 +9,7 @@ const Student =require('./models/studentSchema');
 const passport=require('passport');
 const passportLocal=require('passport-local');
 const session=require('express-session');
-const flash=require('connect-flash');
+const flash = require('connect-flash');
 const {isLoggedIn}=require('./middleware');
 const Reuqest=require('./models/requestSchema');
 const {sendMail}=require('./gmail/register');
@@ -49,19 +49,21 @@ const store=new MongoDBS({
 // store.on('error', function(e){
 //     console.log('session store error');
 // })
-const sessionConfig={
-    store:store,
-    secret:'some',
-    resave:false,
+const sessionConfig = {
+    // store: store,
+    secret: process.env.SECREAT,
+    resave: false,
     saveUninitialized:true,
     cookie:{
-        httpOnly:true,
-        expires:Date.now() + 1000*60*60*24*7,
+        httpOnly: true,
+        expires: Date.now() + 1000*60*60*24*7,
         maxAge: 1000*60*60*24*7
     }
 }
 app.use(session(sessionConfig));
 app.use(flash());
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new passportLocal(Student.authenticate()));
@@ -250,7 +252,7 @@ app.post('/signup', async(req,res)=>{
 
         })
     } catch (error) {
-        
+
     }
     
 })
@@ -265,7 +267,14 @@ app.post('/institute_login',(req,res)=>{
         res.redirect('/institute_login');
     }
 })
+
+app.get('/rejected',(req,res)=>{
+    res.render('rejected');
+})
 app.listen(3000,()=>{
     console.log('server connected');
+})
+app.get('/status',(req,res)=>{
+    res.render('status');
 })
 

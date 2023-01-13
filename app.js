@@ -10,6 +10,10 @@ const passport=require('passport');
 const passportLocal=require('passport-local');
 const session=require('express-session');
 const flash=require('connect-flash');
+const {isLoggedIn}=require('./middleware');
+const Reuqest=require('./models/requestSchema');
+const {sendMail}=require('./gmail/register');
+
 
 require('dotenv').config(); //dotenv package
 
@@ -22,8 +26,7 @@ app.set('views',path.join(__dirname,'views'));
 app.use(express.static(path.join(__dirname,'public')));
 // console.log(process.env.MONGOATLAS);
 const dburl= process.env.MONGO_ATLAS;
-// const dburl="mongodb+srv://RailGhateMein:ihPZKxQF1lteAAPY@cluster0.wvcuh1x.mongodb.net/?retryWrites=true&w=majority";
-//  || 'mongodb://localhost:27017/conssesion';
+
 const secret=process.env.SECREAT;
 mongoose.connect(dburl)
 .then( ()=>{
@@ -67,33 +70,99 @@ passport.deserializeUser(Student.deserializeUser());
 //         // res.render('home');
 
 // });
+app.use((req,res,next)=>{
+    // console.log(req.session);
+    // res.locals.currentUser=req.user;
+    res.locals.success=req.flash('success');
+    res.locals.error=req.flash('error');
+    next();
+})
 app.get('/signup',(req,res)=>{
     res.render('signup');
 })
 app.get('/',(req,res)=>{
     res.render('login');
 })
-
-app.get('/abc',(req,res)=>{
-    res.render('institute_view');
+app.get('/delete', async(req,res)=>{
+    await Reuqest.deleteMany({});
+    console.log('deleted');
+})
+app.get('/post',async(req,res)=>{
+    const reqs={
+        address:"asdf asdfas fdsaf asdf",
+        railway_line:"central",
+        class:"second",
+        starting:"ghansoli",
+        destination:"matunga",
+        student:"63c12e59996d902af649c8b8",
+        request_status:true
+    }
+    // const newReq=await Reuqest.find({}).populate('student');
+    const newReq=new Reuqest(reqs);
+     await newReq.save();
+     console.log(newReq);
+     res.send(newReq);
+})
+app.get('/showReq',async(req,res)=>{
+    const data=await Reuqest.find({});
+    res.send(data);
+})
+app.get('/showStudent', async (req,res)=>{
+    const data=await Student.find({});
+    res.send(data);
+})
+app.get('/institute_view', async(req,res)=>{
+    // const StudentData=await Student.find({});
+    const Requests=await Reuqest.find({"request_status":"false"}).populate(
+        "student"
+    );
+    // console.log(StudentData);
+    res.render('institute_view',{Requests});
 })
 
-app.get('/institute_view',(req,res)=>{
-    res.render('institute_view');
-})
 
+app.get('/institute_view/aprroved', async(req,res)=>{
+    const Requests=await Reuqest.find({request_status:true}).populate(
+        "student"
+    );
+    console.log(Requests);
+    res.render('accepted',{Requests});
+})
+app.get('/institute_view/:id',(req,res)=>{
+    const id=req.params.id
+    res.send(id);
+    // res.render('institute_view');
+})
 app.get('/accepted',(req,res)=>{
     res.render('accepted');
 })
 
 
-app.post('/application', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
+app.get('/application/', isLoggedIn,passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
 
 
     console.log('success');
+    // req.flash('success',"welcome!!!");
     res.render('application');
 })
-app.get('/institute_login',(req,res)=>{
+app.get('/logout', async (req,res)=>{
+    
+})
+app.post('/application/basic', async (req,res)=>{
+
+})
+
+
+app.get('/concession-details',(req,res)=>{
+    res.render('concession-details');
+})
+app.get('/documents',(req,res)=>{
+    res.render('documents');
+})
+
+
+app.get('/institute_login', async(req,res)=>{
+
     res.render('institute_login');
 });
 
@@ -104,18 +173,36 @@ app.post('/signup', async(req,res)=>{
     // const student=await Student(req.body);
     // await student.save();
     // res.send(req.body);
-    const { username, email, password } = req.body;
-        const user = new Student({ email, username });
+    const { username, email, password,first_name,last_name } = req.body;
+        const user = new Student({ email, username,first_name,last_name });
         const registeredStudent = await Student.register(user, password);
         req.login(registeredStudent, err => {
             if (err) return next(err);
             // req.flash('success', 'Welcom!!!');
             // res.redirect('/home');
+            const mailOptions = {
+                from: "vjtirailwayconcession@gmail.com",
+                to: registeredStudent.email,
+                subject: "Registration Successful",
+                // text: "Testing mail sending using NodeJS"
+                html: `<p>Dear User, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
+            };
+            sendMail(mailOptions);
             res.send(registeredStudent);
         })
 })
-
-
+app.get('/view',(req,res)=>{
+    res.render('view');
+})
+app.post('/institute_login',(req,res)=>{
+    const {email,password}=req.body;
+    if(email==='kaka@gmail.com' && password==='123'){
+            res.redirect('/institute_view');
+    }else{
+        res.redirect('/institute_login');
+    }
+})
 app.listen(3000,()=>{
     console.log('server connected');
 })
+

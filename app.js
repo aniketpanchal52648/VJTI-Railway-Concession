@@ -73,7 +73,23 @@ app.get('/signup',(req,res)=>{
 app.get('/',(req,res)=>{
     res.render('login');
 })
+
+
+app.get('/abc',(req,res)=>{
+    res.render('institute_view');
+})
+
+app.get('/institute_view',(req,res)=>{
+    res.render('institute_view');
+})
+
+app.get('/accepted',(req,res)=>{
+    res.render('accepted');
+})
+
+
 app.post('/application', passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}),(req,res)=>{
+
 
     console.log('success');
     res.render('application');

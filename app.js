@@ -202,6 +202,10 @@ app.post('/institute_login',(req,res)=>{
         res.redirect('/institute_login');
     }
 })
+
+app.get('/rejected',(req,res)=>{
+    res.render('rejected');
+})
 app.listen(3000,()=>{
     console.log('server connected');
 })

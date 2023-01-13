@@ -38,31 +38,37 @@
   </div>
   <form action="/application/uploaddoc/<%= st._id %> " method="post">
     <div class="main-container">
-      <div class="input-div">
-        <p class="input-header">Aadhaar Card</p>
-        <input type="file" class="custom-file-input" name="image1" id="image1" >
-      </div>
-      <div class="input-div">
-        <p class="input-header">College ID/ Allotment Letter</p>
-        <input type="file" class="custom-file-input" name="image2" id="image2" >
-      </div>
-      <% if( !(st.caste.toUpperCase() === "OPEN" || st.caste.toUpperCase() === "OBC") ) { %>
-      <div class="input-div">
-        <p class="input-header">Caste Validity</p>        
-        <input type="file" class="custom-file-input" name="image3" id="image3" >
-      </div>    
-      <% } %>
+      <div class="inside">
+        <div class="input-div">
+          <p class="input-header">Aadhaar Card</p>
+          <div>
+            <input type="file" accept="image/png, image/jpg, image/jpeg"/>
+          </div>
+        </div>
+        <div class="input-div">
+          <p class="input-header">College ID/ Allotment Letter</p>
+          <div>
+            <input type="file" accept="image/png, image/jpg, image/jpeg"/>
+          </div>        
+        </div>
+        <% if( !(caste.toUpperCase() === "OPEN" || caste.toUpperCase() === "OBC") ) { %>
+        <div class="input-div">
+          <p class="input-header">Caste Validity</p>    
+          <div>
+            <input type="file" accept="image/png, image/jpg, image/jpeg"/>
+          </div>  
+        </div>    
+        <% } %>
+        
       
-    
-      <button type="submit" class="nextBtn">
-        <span class="btnText">Next</span>
-        <i class="uil uil-navigator"></i>
-      </button>
+        <button type="submit" class="nextBtn">
+          <span class="btnText">Next</span>
+          <i class="uil uil-navigator"></i>
+        </button>
+      </div>      
     </div> 
   </form>
 
-  <script>
-  </script>
 
 </body>
 

@@ -12,11 +12,12 @@ const passportLocal=require('passport-local');
 const session=require('express-session');
 const flash=require('connect-flash');
 const {isLoggedIn}=require('./middleware');
-const Reuqest=require('./models/requestSchema');
+const Request=require('./models/requestSchema');
 const {sendMail}=require('./gmail/register');
 const multer=require('multer');
 const {storage}=require('./cloudinary/index');
 const upload=multer({storage});
+const {approveMail}=require('./gmail/approved');
 
 
 
@@ -89,7 +90,7 @@ app.get('/',(req,res)=>{
     res.render('login');
 })
 app.get('/delete', async(req,res)=>{
-    await Reuqest.deleteMany({});
+    await Request.deleteMany({});
     console.log('deleted');
 })
 app.get('/post',async(req,res)=>{
@@ -100,25 +101,25 @@ app.get('/post',async(req,res)=>{
         starting:"ghansoli",
         destination:"matunga",
         student:"63c12e59996d902af649c8b8",
-        request_status:true
+        request_status:false
     }
     // const newReq=await Reuqest.find({}).populate('student');
-    const newReq=new Reuqest(reqs);
+    const newReq=new Request(reqs);
      await newReq.save();
      console.log(newReq);
      res.send(newReq);
 })
 app.get('/showReq',async(req,res)=>{
-    const data=await Reuqest.find({});
+    const data=await Student.find({});
     res.send(data);
 })
 app.get('/showStudent', async (req,res)=>{
-    const data=await Student.find({});
+    const data=await Request.find({});
     res.send(data);
 })
 app.get('/institute_view', async(req,res)=>{
     // const StudentData=await Student.find({});
-    const Requests=await Reuqest.find({"request_status":"false"}).populate(
+    const Requests=await Request.find({"request_status":"false"}).populate(
         "student"
     );
     // console.log(StudentData);
@@ -127,7 +128,7 @@ app.get('/institute_view', async(req,res)=>{
 
 
 app.get('/institute_view/aprroved', async(req,res)=>{
-    const Requests=await Reuqest.find({request_status:true}).populate(
+    const Requests=await Request.find({request_status:true}).populate(
         "student"
     );
     console.log(Requests);
@@ -135,44 +136,69 @@ app.get('/institute_view/aprroved', async(req,res)=>{
 })
 app.get('/institute_view/:id',async(req,res)=>{
     const id=req.params.id;
-    const reqs=await Reuqest.findById(id).populate('student');
+    const reqs=await Request.findById(id).populate('student');
     console.log(reqs);
 
 
     res.render('view',{reqs});
     // res.render('institute_view');
 })
-app.get('/accepted',(req,res)=>{
-    res.render('accepted');
-})
+// app.get('/accepted',(req,res)=>{
+//     res.render('accepted');
+// })
 
-app.get('/institue_view/accepted/:id', async(req,res)=>{
-    const request=await Request.findById(req.params.id);
-    request.request_status=true;
-    await request.save();;
-    res.redirect('/institue_view');
+// app.get('/institue_view/accepted/:id', async(req,res)=>{
+//     const request=await Request.findById(req.params.id);
+//     request.request_status=true;
+//     await request.save();;
+//     res.redirect('/institue_view');
 
-})
-app.get('/institue_view/reverted/:id',(req,res)=>{
-    
+// })
+app.get('/institute_view/reverted/:id',async(req,res)=>{
+    const req_id=req.params.id
+    console.log(req_id);
+    const request=await Request.findById(req_id).populate('student');
+    console.log(request);
+    res.render('rejected',{request});
+
 })
 app.post('/institue_view/reverted/:id',async(req,res)=>{
     const req_id=req.params.id
     const request=await Request.findById(req_id).populate('student');
     const id=request.student._id;
-    await Reuqest.findByIdAndDelete(req_id);
+    // await Reuqest.findByIdAndDelete(req_id);
     const student=await Student.findById(id);
     const mailOptions = {
         from: "vjtirailwayconcession@gmail.com",
         to: student.email,
         subject: "Request Reverted",
         // text: "Testing mail sending using NodeJS"
-        html: `<p>Dear ${student.first_name} ${student.last_name}, your application for the concession has been reverted back due to the provided <strong> ${req.body.reason} </strong>.</p> <p> You may now check the status of the application and make the required changes and re-apply for the application. </p>` 
+        html: `<p>Dear ${student.first_name} ${student.last_name}, your application for the concession has been reverted back due to the provided <strong> ${req.body.reason} ${req.body.reason1} </strong>.</p> <p> You may now check the status of the application and make the required changes and re-apply for the application. </p>` 
     };
 
     sendMail(mailOptions);
-    res.redirect('/institue_view');
+    res.redirect('/institute_view');
 
+
+
+})
+app.post('/institute_view/accepted/:id',async(req,res)=>{
+    const req_id=req.params.id
+    const request=await Request.findById(req_id).populate('student');
+    request.request_status=true;
+    await request.save();
+    const id=request.student._id;
+    // await Reuqest.findByIdAndDelete(req_id);
+    const student=await Student.findById(id);
+    const mailOptions = {
+    from: "vjtirailwayconcession@gmail.com",
+    to: student.email,
+    subject: "Request Approved",
+    // text: "Testing mail sending using NodeJS"
+    html: `<p> Dear ${student.first_name} ${student.last_name}, your request for the railway concession has been approved.</p>  <p>You may now visit the Railway Concession Office and get your approved concession, duly stamped and signed. </p>`
+};
+approveMail(mailOptions);
+res.redirect('/institute_view');
 
 
 })
@@ -293,7 +319,15 @@ app.post('/institute_login',(req,res)=>{
         res.redirect('/institute_login');
     }
 })
+
+// app.get('/rejected',(req,res)=>{
+//     res.render('rejected');
+// })
+app.get('/status',(req,res)=>{
+    res.render('status');
+})
 app.listen(3000,()=>{
     console.log('server connected');
 })
+
 

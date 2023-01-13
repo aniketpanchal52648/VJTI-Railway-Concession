@@ -8,14 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-
+ 
     <section class="header container">
         <ul class="nav nav-pills nav-fill">
             <li class="nav-item">
               <a class="nav-link active" href="/institute_view">Requests</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/accepted">Accepted</a>
+                <a class="nav-link" href="/institute_view/aprroved">Accepted</a>
               </li>
         </ul>
       </section>
@@ -23,20 +23,27 @@
       <div class="my-4 container">
         <table class="table table-bordered">
           <thead class="thead-light bg-info">
+            
             <tr>
               <th scope="col">Sr.no.</th>
               <th scope="col">Name</th>
               <th scope="col">Reg. No.</th>
               <th scope="col">Details</th>
             </tr>
+           
           </thead>
           <tbody>
+            <% for (let Req of Requests){
+               %> 
             <tr>
               <th scope="row">1</th>
-              <td>Roshan</td>
-              <td>201060040</td>
-              <td><a href="/view">view</a></td>
+
+              <td><%= Req.student.first_name  %> <%=Req.student.last_name %> </td>
+              <td><%= Req.student.username %> </td>
+              <td><a href="institute_view/<%= Req.student._id %> ">view</a></td>
+
             </tr>
+            <% } %> 
           </tbody>
         </table>
       </div>

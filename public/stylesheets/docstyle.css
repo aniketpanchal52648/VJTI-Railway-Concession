@@ -1,3 +1,15 @@
+.navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+}
+
+.navbar-nav.navbar-right {
+    position: absolute;
+    left: 100%;
+    transform: translatex(-100%);
+}
+
 .main-container {
     margin: auto;
     align-items: center;
@@ -54,7 +66,7 @@ button I{
     margin: 0 6px;
 }
 
-/*custom inpu file*/
+/custom inpu file/
 .custom-file-input {
     color: transparent;
   

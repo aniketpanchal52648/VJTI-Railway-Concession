@@ -26,6 +26,7 @@ body{
     transform: translatex(-100%);
 }
 
+
 .container{
     display: flex;
     position: relative;
@@ -55,7 +56,7 @@ body{
 .container form{
     position: relative;
     margin-top: 16px;
-    min-height: 600px;
+    min-height: 650px;
     background-color: #fff;
     overflow: auto;
 }

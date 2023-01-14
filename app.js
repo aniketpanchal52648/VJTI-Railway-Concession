@@ -51,19 +51,8 @@ const store=new MongoDBS({
 // store.on('error', function(e){
 //     console.log('session store error');
 // })
-const sessionConfig = {
-    // store: store,
-    secret: process.env.SECREAT,
-    resave: false,
-    saveUninitialized:true,
-    cookie:{
-        httpOnly: true,
-        expires: Date.now() + 1000*60*60*24*7,
-        maxAge: 1000*60*60*24*7
-    }
-}
-app.use(session(sessionConfig));
-app.use(flash());
+
+
 
 
 app.use(passport.initialize());
@@ -78,13 +67,7 @@ passport.deserializeUser(Student.deserializeUser());
 //         // res.render('home');
 
 // });
-app.use((req,res,next)=>{
-    // console.log(req.session);
-    // res.locals.currentUser=req.user;
-    res.locals.success=req.flash('success');
-    res.locals.error=req.flash('error');
-    next();
-})
+
 app.get('/signup',(req,res)=>{
     res.render('signup');
 })

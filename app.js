@@ -223,8 +223,8 @@ app.post('/application',passport.authenticate('local',{failureFlash:true,failure
 // })
 app.post('/application/basicdetails', isLoggedIn,async(req,res)=>{
     // console.log(req.body);
-    const u=req.session.path.user
-    const user= await Student.findOne({username:u});
+    // const u=req.session.path.user
+    const user= await Student.findOne({username:req.session.passport.user});
     // console.log(user[0]);
     const id=user._id;
     // console.log((id));

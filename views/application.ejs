@@ -5,25 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Apply for Concession</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
     <link
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
-
     <link rel="stylesheet" href="/stylesheets/styles.css" />
   </head>
   <body>
-    
-    
-    <div class="alert alert-success alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>Success! </strong> Dear User, you have successfully logged in!
-    </div>
-            
     <div style="display: block">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a style="padding-left: 7px;" class="navbar-brand">Home</a>
@@ -40,25 +34,6 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="">Basic Details</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/concession-details"
-                >Concession Details</a
-              >
-            </li>
-            
-              <a class="nav-link" href="/documents">Upload Document</a>
-
-              <a class="nav-link" href="/status">Status</a>
-              <a class="nav-link" href="/">Upload Document</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
-
           <ul class="nav navbar-nav navbar-center">
             <li class="active">
               <p style="margin-top: 17px;" class="nav-link">Basic Details</p>
@@ -88,13 +63,13 @@
               </div>
 
               <div class="input-field">
-                <label>Middle Name</label>
-                <input type="text" placeholder="Enter your name" required name="middle_name" />
+                <label>Last Name</label>
+                <input type="text" placeholder="Enter your name" required name="last_name" />
               </div>
 
               <div class="input-field">
-                <label>Last Name</label>
-                <input type="text" placeholder="Enter your name" required name="last_name" />
+                <label>Middle Name</label>
+                <input type="text" placeholder="Enter your name" required name="middle_name" />
               </div>
 
               <div class="input-field">
@@ -124,7 +99,7 @@
 
               <div class="input-field">
                 <label>Caste</label>
-                <select required name="caste">
+                <select required>
                   <option value="">Select</option>
                   <option>Open</option>
                   <option>OBC</option>
@@ -136,7 +111,7 @@
           </div>
 
           <div class="details ID">
-            <span class="title">Academic Details</span>
+            <span class="title">Acedemic Details</span>
 
             <div class="fields">
               <div class="input-field">
@@ -146,7 +121,7 @@
 
               <div class="input-field">
                 <label>Year of Study</label>
-                <select required name="year">
+                <select required>
                   <option value="">Select</option>
                   <option>First</option>
                   <option>Second</option>
@@ -157,7 +132,7 @@
 
               <div class="input-field">
                 <label>Semester</label>
-                <select required name="semester">
+                <select required>
                   <option value="">Select</option>
                   <option>I</option>
                   <option>II</option>
@@ -172,7 +147,7 @@
 
               <div class="input-field">
                 <label>Program</label>
-                <select required name="programme">
+                <select required>
                   <option value="">Select</option>
                   <option>B.Tech</option>
                   <option>M.Tech</option>
@@ -184,8 +159,8 @@
 
               <div class="input-field">
                 <label>Department</label>
-                <select required name="dept">
-                  <option value="" >Select</option>
+                <select required>
+                  <option value="">Select</option>
                   <option>Computer Science</option>
                   <option>Information Technology</option>
                   <option>Electronics & Telecommunication</option>
@@ -207,8 +182,6 @@
           </div>
         </div>
       </form>
-
-      <!-- <a href="/application/conssesion/><button>Apply for Renewal</button></a> -->
     </div>
 
   </body>

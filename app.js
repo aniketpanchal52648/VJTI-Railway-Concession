@@ -10,7 +10,7 @@ const Student =require('./models/studentSchema');
 const passport=require('passport');
 const passportLocal=require('passport-local');
 const session=require('express-session');
-const flash = require('connect-flash');
+const flash=require('connect-flash');
 const {isLoggedIn}=require('./middleware');
 const Request=require('./models/requestSchema');
 const {sendMail}=require('./gmail/register');
@@ -18,7 +18,6 @@ const multer=require('multer');
 const {storage}=require('./cloudinary/index');
 const upload=multer({storage});
 const {approveMail}=require('./gmail/approved');
-const {appliedMail}=require('./gmail/applied');
 
 
 
@@ -52,10 +51,9 @@ const store=new MongoDBS({
 // store.on('error', function(e){
 //     console.log('session store error');
 // })
-
 const sessionConfig={
     store:store,
-    secret,
+    secret:'some',
     resave:false,
     saveUninitialized:true,
     cookie:{
@@ -65,8 +63,7 @@ const sessionConfig={
     }
 }
 app.use(session(sessionConfig));
-
-
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new passportLocal(Student.authenticate()));
@@ -79,7 +76,13 @@ passport.deserializeUser(Student.deserializeUser());
 //         // res.render('home');
 
 // });
-
+app.use((req,res,next)=>{
+    // console.log(req.session);
+    // res.locals.currentUser=req.user;
+    res.locals.success=req.flash('success');
+    res.locals.error=req.flash('error');
+    next();
+})
 app.get('/signup',(req,res)=>{
     res.render('signup');
 })
@@ -115,8 +118,8 @@ app.get('/showStudent', async (req,res)=>{
     res.send(data);
 })
 app.get('/institute_view', async(req,res)=>{
-    const StudentData=await Student.find({});
-    const Requests=await Request.find({"request_status":'false'}).populate(
+    // const StudentData=await Student.find({});
+    const Requests=await Request.find({"request_status":"false"}).populate(
         "student"
     );
     // console.log(StudentData);
@@ -163,7 +166,7 @@ app.post('/institue_view/reverted/:id',async(req,res)=>{
     const req_id=req.params.id
     const request=await Request.findById(req_id).populate('student');
     const id=request.student._id;
-    await Request.findByIdAndDelete(req_id);
+    // await Reuqest.findByIdAndDelete(req_id);
     const student=await Student.findById(id);
     const mailOptions = {
         from: "vjtirailwayconcession@gmail.com",
@@ -205,7 +208,7 @@ app.post('/application',passport.authenticate('local',{failureFlash:true,failure
 
     console.log(req.body);
     const user=req.body.username;
-    const student=await Student.findOne({username:user});
+    const student=await Student.find({username:user});
     console.log(student)
 
 
@@ -219,9 +222,9 @@ app.post('/application',passport.authenticate('local',{failureFlash:true,failure
 //     res.send(req.body);
 // })
 app.post('/application/basicdetails', isLoggedIn,async(req,res)=>{
-    // console.log(req.session.passport.user);
-    const user= await Student.findOne({username:req.session.passport.user});
-    console.log(user);
+    // console.log(req.body);
+    const user= await Student.findOne({username:req.body.reg_no});
+    // console.log(user[0]);
     const id=user._id;
     // console.log((id));
     // await Student.update({_id:req.body.reg_name},{$set:{...req.body}});
@@ -243,7 +246,6 @@ app.post('/application/basicdetails', isLoggedIn,async(req,res)=>{
 app.get('/application/uploaddoc/:id', async(req,res)=>{
     
     const st=await Student.findById(req.params.id);
-    console.log(st);
     // const caste=st.caste
     res.render('documents',{st});
 })
@@ -281,22 +283,12 @@ app.get('/application/conssesion/:id',async(req,res)=>{
 app.post('/application/conssesion/:id',async(req,res)=>{
     // const student=await Student.findByIdAndUpdate({_id:req.params._id},{...req.body});
     const request=await Request({...req.body});
-    const st=await Student.findById(req.params.id);
     request.student=req.params.id;
     await request.save();
-    const mailOptions = {
-        from: "vjtirailwayconcession@gmail.com",
-        to: `${st.email}`,
-        subject: "Application Submitted",
-        // text: "Testing mail sending using NodeJS"
-        html: `<p> Dear ${st.first_name} ${st.last_name}, You have successfully applied for the Railway Concession, Your application is <strong> ${request._id}</strong> </p> <p> You can always view you status of the application at Website. </p>` 
-    };
-    // console.log(request);
-    appliedMail(mailOptions);
-
+    console.log(request);
     // res.send('done');
     // res.redirect('/application');
-    res.render('application',{status:'true'});
+    res.render('application');
 
 
 })
@@ -334,8 +326,7 @@ app.get('/institute_login', async(req,res)=>{
 
 
 app.post('/signup', async(req,res)=>{
-    try {
-        console.log(req.body);
+    console.log(req.body);
     // const student=await Student(req.body);
     // await student.save();
     // res.send(req.body);
@@ -351,17 +342,11 @@ app.post('/signup', async(req,res)=>{
                 to: registeredStudent.email,
                 subject: "Registration Successful",
                 // text: "Testing mail sending using NodeJS"
-                html: `<p>Dear ${registeredStudent.first_name} ${registeredStudent.last_name}, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
+                html: `<p>Dear User, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
             };
             sendMail(mailOptions);
-            // req.flash('user', req.body.username);
-            res.render('login');
-
+            res.send(registeredStudent);
         })
-    } catch (error) {
-
-    }
-    
 })
 app.get('/view',(req,res)=>{
     res.render('view');
@@ -369,15 +354,15 @@ app.get('/view',(req,res)=>{
 app.post('/institute_login',(req,res)=>{
     const {email,password}=req.body;
     if(email==='kaka@gmail.com' && password==='123'){
-            res.redirect('/institute_view/history/req');
+            res.redirect('/institute_view');
     }else{
         res.redirect('/institute_login');
     }
 })
 
-app.get('/rejected',(req,res)=>{
-    res.render('rejected');
-})
+// app.get('/rejected',(req,res)=>{
+//     res.render('rejected');
+// })
 app.get('/status',(req,res)=>{
     res.render('status');
 })

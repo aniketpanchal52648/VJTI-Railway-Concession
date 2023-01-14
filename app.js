@@ -345,6 +345,7 @@ app.post('/signup', async(req,res)=>{
                 html: `<p>Dear ${registeredStudent.first_name} ${registeredStudent.last_name}, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
             };
             sendMail(mailOptions);
+            // req.flash('user', req.body.username);
             res.render('login');
 
         })

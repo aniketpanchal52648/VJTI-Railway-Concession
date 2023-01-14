@@ -55,6 +55,17 @@ Concession Details Page (Student)
 
 ![Concession Details](appImage/concessionPage.png)
 
+--- 
+
+
+## <strong> > View Button Pages 
+
+![img](appImage/viewBasic.png)
+
+![img](appImage/viewDoc.png)
+
+![img](appImage/viewBut.png)
+
 ---
 
 ## <strong> > Gmail Notifications Using NodeMailer:

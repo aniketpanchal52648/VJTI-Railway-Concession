@@ -72,7 +72,7 @@
                 <th style="text-align: center;">Aadhar card</th>
             </tr>
             <tr>
-                <td style="text-align: center;"><img src="https://www.freecodecamp.org/news/content/images/2021/03/Quincy-Larson-photo.jpg" alt="" height="500"></td>
+                <td style="text-align: center;"><img src=<%= reqs.student.images[0].url %>  alt="" height="500"></td>
             </tr>
         </table>           
         
@@ -80,18 +80,21 @@
             <tr>
                 <th style="text-align: center;">ID Card <span>&#47;</span> Letter</th>
             </tr>
+            
             <tr>
-                <td style="text-align: center;"><img src="https://www.freecodecamp.org/news/content/images/2021/03/Quincy-Larson-photo.jpg" alt="" height="500" ></td>
+                <td style="text-align: center;"><img src=<%= reqs.student.images[1].url %> alt="" height="500" ></td>
             </tr>
         </table>
         <br>
         <table class="table table-bordered ">
+            <% if(reqs.student.images[2]){ %> 
             <tr>
                 <th style="text-align: center;">Caste Certificate</th>
             </tr>
             <tr>
-                <td style="text-align: center;"><img src="https://www.freecodecamp.org/news/content/images/2021/03/Quincy-Larson-photo.jpg" alt="" height="500" ></td>
+                <td style="text-align: center;"><img src=<%= reqs.student.images[2].url %> alt="" height="500" ></td>
             </tr>
+            <% } %> 
         </table>
 
         <br>

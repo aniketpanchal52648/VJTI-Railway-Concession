@@ -66,7 +66,7 @@ const studentSchema = new Schema({
                 url: String,
                 filename: String
         }
-],
+]
 
 
 

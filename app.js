@@ -110,7 +110,7 @@ app.get('/post',async(req,res)=>{
      res.send(newReq);
 })
 app.get('/showReq',async(req,res)=>{
-    const data=await Student.find({});
+    const data=await Request.find({});
     res.send(data);
 })
 app.get('/showStudent', async (req,res)=>{
@@ -202,6 +202,7 @@ res.redirect('/institute_view');
 
 
 })
+// app.get('/application',)
 app.post('/application',passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}), async(req,res)=>{
 
 
@@ -282,10 +283,12 @@ app.get('/application/conssesion/:id',async(req,res)=>{
 app.post('/application/conssesion/:id',async(req,res)=>{
     // const student=await Student.findByIdAndUpdate({_id:req.params._id},{...req.body});
     const request=await Request({...req.body});
-
+    request.student=req.params.id;
+    await request.save();
     console.log(request);
     // res.send('done');
-    res.redirect('/application');
+    // res.redirect('/application');
+    res.render('application');
 
 
 })

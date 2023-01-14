@@ -10,7 +10,7 @@ const Student =require('./models/studentSchema');
 const passport=require('passport');
 const passportLocal=require('passport-local');
 const session=require('express-session');
-const flash=require('connect-flash');
+const flash = require('connect-flash');
 const {isLoggedIn}=require('./middleware');
 const Request=require('./models/requestSchema');
 const {sendMail}=require('./gmail/register');
@@ -51,19 +51,10 @@ const store=new MongoDBS({
 // store.on('error', function(e){
 //     console.log('session store error');
 // })
-const sessionConfig={
-    store:store,
-    secret:'some',
-    resave:false,
-    saveUninitialized:true,
-    cookie:{
-        httpOnly:true,
-        expires:Date.now() + 1000*60*60*24*7,
-        maxAge: 1000*60*60*24*7
-    }
-}
-app.use(session(sessionConfig));
-app.use(flash());
+
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new passportLocal(Student.authenticate()));
@@ -76,13 +67,7 @@ passport.deserializeUser(Student.deserializeUser());
 //         // res.render('home');
 
 // });
-app.use((req,res,next)=>{
-    // console.log(req.session);
-    // res.locals.currentUser=req.user;
-    res.locals.success=req.flash('success');
-    res.locals.error=req.flash('error');
-    next();
-})
+
 app.get('/signup',(req,res)=>{
     res.render('signup');
 })
@@ -326,7 +311,8 @@ app.get('/institute_login', async(req,res)=>{
 
 
 app.post('/signup', async(req,res)=>{
-    console.log(req.body);
+    try {
+        console.log(req.body);
     // const student=await Student(req.body);
     // await student.save();
     // res.send(req.body);
@@ -342,11 +328,17 @@ app.post('/signup', async(req,res)=>{
                 to: registeredStudent.email,
                 subject: "Registration Successful",
                 // text: "Testing mail sending using NodeJS"
-                html: `<p>Dear User, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
+                html: `<p>Dear ${registeredStudent.first_name} ${registeredStudent.last_name}, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
             };
             sendMail(mailOptions);
-            res.send(registeredStudent);
+            // req.flash('user', req.body.username);
+            res.render('login');
+
         })
+    } catch (error) {
+
+    }
+    
 })
 app.get('/view',(req,res)=>{
     res.render('view');

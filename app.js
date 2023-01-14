@@ -373,9 +373,9 @@ app.post('/institute_login',(req,res)=>{
     }
 })
 
-// app.get('/rejected',(req,res)=>{
-//     res.render('rejected');
-// })
+app.get('/rejected',(req,res)=>{
+    res.render('rejected');
+})
 app.get('/status',(req,res)=>{
     res.render('status');
 })

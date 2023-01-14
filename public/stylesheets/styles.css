@@ -7,7 +7,7 @@
     font-family: 'Poppins', sans-serif;
 }
 body{
-    min-height: 100vh;
+    /* min-height: 1000px; */
     /* display: flex; */
     align-items: center;
     justify-content: center;
@@ -29,10 +29,10 @@ body{
 .container{
     display: flex;
     position: relative;
-    max-width: 900px;
+    max-width: 1200px;
     border-radius: 6px;
     padding: 30px;
-    margin: 0 15px;
+    margin: auto;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
@@ -55,7 +55,7 @@ body{
 .container form{
     position: relative;
     margin-top: 16px;
-    min-height: 490px;
+    min-height: 600px;
     background-color: #fff;
     overflow: auto;
 }

@@ -134,6 +134,7 @@ app.get('/institute_view/aprroved', async(req,res)=>{
     console.log(Requests);
     res.render('accepted',{Requests});
 })
+
 app.get('/institute_view/:id',async(req,res)=>{
     const id=req.params.id;
     const reqs=await Request.findById(id).populate('student');
@@ -142,6 +143,17 @@ app.get('/institute_view/:id',async(req,res)=>{
 
     res.render('view',{reqs});
     // res.render('institute_view');
+})
+app.post('/deleteAP/:id',async(req,res)=>{
+    const id=req.params.id;
+    await Request.findByIdAndDelete(id);
+    res.redirect('/institute_view');
+})
+app.get('/institute_view/approved/:id', async(req,res)=>{
+    const id=req.params.id;
+    const reqs=await Request.findById(id).populate('student');
+    // console.log(reqs);
+    res.render('viewA',{reqs});
 })
 // app.get('/accepted',(req,res)=>{
 //     res.render('accepted');
@@ -206,14 +218,14 @@ res.redirect('/institute_view');
 app.post('/application',passport.authenticate('local',{failureFlash:true,failureRedirect:'/'}), async(req,res)=>{
 
 
-    console.log(req.body);
-    const user=req.body.username;
-    const student=await Student.find({username:user});
-    console.log(student)
+    // console.log(req.body);
+    // const user=req.body.username;
+    const s=await Student.findOne({username:req.session.passport.user});
+    // console.log(s._id)
 
 
     // req.flash('success',"welcome!!!");
-    res.render('application',{student});
+    res.render('application',{id:s._id});
 });
 // app.get('/con',(req,res)=>{
 //     res.render('concession-details');
@@ -289,9 +301,14 @@ app.post('/application/conssesion/:id',async(req,res)=>{
     console.log(request);
     // res.send('done');
     // res.redirect('/application');
-    res.render('application');
+    // res.render('status',{});
+    res.redirect(`/status/${request._id}`);
 
 
+})
+app.get('/status/:id',async(req,res)=>{
+    const re=await Request.findById(req.params.id);
+    res.render('status',{re});
 })
 app.get('/logout',isLoggedIn ,async (req,res)=>{
     req.logout(function (err) {

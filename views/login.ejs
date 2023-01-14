@@ -11,32 +11,24 @@
     <title>
       Login Page</title>
 </head>
-
-
-
-<body style=" background-image : url('https://i.postimg.cc/7L4HRW62/imageedit-1-9356153394.png');height:400px ;  "
-
->
-<style>
-  h1 {text-align: center;}
-  p {text-align: center;}
-  div {text-align: center;}
-  </style>
-  </head>
-  <body>
+<body style=" background-image : url('https://i.postimg.cc/7L4HRW62/imageedit-1-9356153394.png')">
+  <div>
+    
+  </div>
   
-  <h1>Railway Concession Portal</h1>
   <%- include('./partials/flash') %> 
     <section class="vh-100">
         <div class="container-fluid h-custom" >
           <div class="row d-flex justify-content-center align-items-center h-100">
+            <h1 class="display-1" style="text-align: center; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Railway Concession Portal</h1>
             <div class="col-md-9 col-lg-6 col-xl-5">
-              <img src="https://i.postimg.cc/t4q8Q42z/Screenshot-471.png" style="border: 5px solid ; padding: 3px; margin-top:0px ;"
+             
+              <img src="https://i.postimg.cc/t4q8Q42z/Screenshot-471.png" style="border: 5px solid ; padding: 3px; "
                 class="img-fluid" alt="Sample image">
             </div>
             <div 
-            class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" style="background-color: rgb(236, 233, 229,0.5); border-radius: 20px ; margin-top: 0px; "; >
-              <form action="/application" method="get" class="needs-validation" novalidate>
+            class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" style="background-color: rgb(236, 233, 229,0.5); border-radius: 20px ;"; >
+              <form action="/application" method="post" class="needs-validation" novalidate>
                 <!-- <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                   <p class="lead fw-normal mb-0 me-3">Sign in with</p>
                   <button type="button" class="btn btn-primary btn-floating mx-1">
@@ -59,7 +51,6 @@
 
                 
                 <br>
-                
                 <h2 class="heading-login"; > <i class="fa-solid fa-graduation-cap"></i> Student Login</h2>
 
                 <!-- Email input -->
@@ -102,10 +93,8 @@
                     style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                   <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup"
                       class="link-danger">Register</a></p>
-                  <p                   
-                  class="small fw-bold mt-2 pt-1 mb-0">
-                  
-                  <button class="btn btn-light btn-sm"><a style="text-decoration: none;" href="/institute_login"> <i class="fa-solid fa-building-columns"></i> Institute Login</a></button>
+                      <p class="small fw-bold mt-2 pt-1 mb-0"><a href="/institute_login"
+                        class="link-primary h5">Institute login</a></p>
                     </p>
                     <br>
                 </div>

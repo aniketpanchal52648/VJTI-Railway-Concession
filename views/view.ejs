@@ -68,15 +68,18 @@
             <h2>Documents</h2>
         </div>
         <table class="table table-bordered">
+            <% if(reqs.student.images[0]){ %> 
             <tr>
                 <th style="text-align: center;">Aadhar card</th>
             </tr>
             <tr>
                 <td style="text-align: center;"><img src=<%= reqs.student.images[0].url %>  alt="" height="500"></td>
             </tr>
+            <% } %> 
         </table>           
         
         <table class="table table-bordered ">
+            <% if(reqs.student.images[1]){ %> 
             <tr>
                 <th style="text-align: center;">ID Card <span>&#47;</span> Letter</th>
             </tr>
@@ -84,6 +87,7 @@
             <tr>
                 <td style="text-align: center;"><img src=<%= reqs.student.images[1].url %> alt="" height="500" ></td>
             </tr>
+            <% } %> 
         </table>
         <br>
         <table class="table table-bordered ">
@@ -105,9 +109,9 @@
                     <form action="accepted/<%= reqs._id %>" method="post">
 
                     
-                    <button type="submit" class="btn btn-primary btn-lg" >Accepted</button>
+                    <button type="submit" class="btn btn-primary btn-lg" >Accept the Request</button>
                 </form>
-               <a  href="reverted/<%= reqs._id %> "> <button type="button" class="btn btn-danger mx-5 btn-lg" >Reverted</button></a></td>
+               <a  href="reverted/<%= reqs._id %> "> <button type="button" class="btn btn-danger mx-5 btn-lg" >Revert the Request</button></a></td>
             </tr>
         </table>
         

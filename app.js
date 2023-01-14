@@ -18,6 +18,7 @@ const multer=require('multer');
 const {storage}=require('./cloudinary/index');
 const upload=multer({storage});
 const {approveMail}=require('./gmail/approved');
+const {appliedMail}=require('./gmail/applied');
 
 
 
@@ -118,8 +119,8 @@ app.get('/showStudent', async (req,res)=>{
     res.send(data);
 })
 app.get('/institute_view', async(req,res)=>{
-    // const StudentData=await Student.find({});
-    const Requests=await Request.find({"request_status":"false"}).populate(
+    const StudentData=await Student.find({});
+    const Requests=await Request.find({"request_status":'false'}).populate(
         "student"
     );
     // console.log(StudentData);
@@ -166,7 +167,7 @@ app.post('/institue_view/reverted/:id',async(req,res)=>{
     const req_id=req.params.id
     const request=await Request.findById(req_id).populate('student');
     const id=request.student._id;
-    // await Reuqest.findByIdAndDelete(req_id);
+    await Request.findByIdAndDelete(req_id);
     const student=await Student.findById(id);
     const mailOptions = {
         from: "vjtirailwayconcession@gmail.com",
@@ -208,7 +209,7 @@ app.post('/application',passport.authenticate('local',{failureFlash:true,failure
 
     console.log(req.body);
     const user=req.body.username;
-    const student=await Student.find({username:user});
+    const student=await Student.findOne({username:user});
     console.log(student)
 
 
@@ -222,9 +223,9 @@ app.post('/application',passport.authenticate('local',{failureFlash:true,failure
 //     res.send(req.body);
 // })
 app.post('/application/basicdetails', isLoggedIn,async(req,res)=>{
-    // console.log(req.body);
-    const user= await Student.findOne({username:req.body.reg_no});
-    // console.log(user[0]);
+    // console.log(req.session.passport.user);
+    const user= await Student.findOne({username:req.session.passport.user});
+    console.log(user);
     const id=user._id;
     // console.log((id));
     // await Student.update({_id:req.body.reg_name},{$set:{...req.body}});
@@ -246,6 +247,7 @@ app.post('/application/basicdetails', isLoggedIn,async(req,res)=>{
 app.get('/application/uploaddoc/:id', async(req,res)=>{
     
     const st=await Student.findById(req.params.id);
+    console.log(st);
     // const caste=st.caste
     res.render('documents',{st});
 })
@@ -283,12 +285,22 @@ app.get('/application/conssesion/:id',async(req,res)=>{
 app.post('/application/conssesion/:id',async(req,res)=>{
     // const student=await Student.findByIdAndUpdate({_id:req.params._id},{...req.body});
     const request=await Request({...req.body});
+    const st=await Student.findById(req.params.id);
     request.student=req.params.id;
     await request.save();
-    console.log(request);
+    const mailOptions = {
+        from: "vjtirailwayconcession@gmail.com",
+        to: `${st.email}`,
+        subject: "Application Submitted",
+        // text: "Testing mail sending using NodeJS"
+        html: `<p> Dear ${st.first_name} ${st.last_name}, You have successfully applied for the Railway Concession, Your application is <strong> ${request._id}</strong> </p> <p> You can always view you status of the application at Website. </p>` 
+    };
+    // console.log(request);
+    appliedMail(mailOptions);
+
     // res.send('done');
     // res.redirect('/application');
-    res.render('application');
+    res.render('application',{status:'true'});
 
 
 })
@@ -345,7 +357,8 @@ app.post('/signup', async(req,res)=>{
                 html: `<p>Dear User, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
             };
             sendMail(mailOptions);
-            res.send(registeredStudent);
+            // res.send(registeredStudent);
+            res.render('login');
         })
 })
 app.get('/view',(req,res)=>{
@@ -354,7 +367,7 @@ app.get('/view',(req,res)=>{
 app.post('/institute_login',(req,res)=>{
     const {email,password}=req.body;
     if(email==='kaka@gmail.com' && password==='123'){
-            res.redirect('/institute_view');
+            res.redirect('/institute_view/history/req');
     }else{
         res.redirect('/institute_login');
     }

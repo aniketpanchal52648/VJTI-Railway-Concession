@@ -307,7 +307,8 @@ app.post('/application/conssesion/:id',async(req,res)=>{
 
 })
 app.get('/status/:id',async(req,res)=>{
-    const re=await Request.findById(req.params.id);
+    const re = await Request.findById(req.params.id);
+    console.log(re);
     res.render('status',{re});
 })
 app.get('/logout',isLoggedIn ,async (req,res)=>{
@@ -363,7 +364,8 @@ app.post('/signup', async(req,res)=>{
                 html: `<p>Dear User, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>` 
             };
             sendMail(mailOptions);
-            res.send(registeredStudent);
+            // res.send(registeredStudent);
+            res.send('login');
         })
 })
 app.get('/view',(req,res)=>{
@@ -371,7 +373,7 @@ app.get('/view',(req,res)=>{
 })
 app.post('/institute_login',(req,res)=>{
     const {email,password}=req.body;
-    if(email==='kaka@gmail.com' && password==='123'){
+    if(email==='admin@gmail.com' && password==='123'){
             res.redirect('/institute_view');
     }else{
         res.redirect('/institute_login');

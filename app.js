@@ -341,8 +341,9 @@ app.post('/institute_login', (req, res) => {
 
 
 
-app.listen(3000, () => {
-    console.log('server connected');
+const port=process.env.PORT|| 3000;
+app.listen(port,()=>{
+    console.log(`Serving on port${port}`);
 })
 
 

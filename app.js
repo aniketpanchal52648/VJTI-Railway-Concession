@@ -83,16 +83,20 @@ app.use((req,res,next)=>{
     res.locals.error=req.flash('error');
     next();
 })
+
 app.get('/signup',(req,res)=>{
     res.render('signup');
 })
+
 app.get('/',(req,res)=>{
     res.render('login');
 })
+
 app.get('/delete', async(req,res)=>{
     await Request.deleteMany({});
     console.log('deleted');
 })
+
 app.get('/post',async(req,res)=>{
     const reqs={
         address:"asdf asdfas fdsaf asdf",
@@ -109,14 +113,17 @@ app.get('/post',async(req,res)=>{
      console.log(newReq);
      res.send(newReq);
 })
+
 app.get('/showReq',async(req,res)=>{
     const data=await Request.find({});
     res.send(data);
 })
+
 app.get('/showStudent', async (req,res)=>{
     const data=await Request.find({});
     res.send(data);
 })
+
 app.get('/institute_view', async(req,res)=>{
     // const StudentData=await Student.find({});
     const Requests=await Request.find({"request_status":"false"}).populate(
@@ -190,8 +197,6 @@ app.post('/institue_view/reverted/:id',async(req,res)=>{
 
     sendMail(mailOptions);
     res.redirect('/institute_view');
-
-
 
 })
 app.post('/institute_view/accepted/:id',async(req,res)=>{

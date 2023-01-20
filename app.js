@@ -21,6 +21,7 @@ const multer = require('multer');
 const { storage } = require('./cloudinary/index');
 const upload = multer({ storage });
 const { approveMail } = require('./gmail/approved');
+const catchAsync=require('./utils/catchAsync');
 
 
 
@@ -71,6 +72,7 @@ passport.use(new passportLocal(Student.authenticate()));
 
 passport.serializeUser(Student.serializeUser());
 passport.deserializeUser(Student.deserializeUser());
+app.use(express.static('public'))
 
 app.use((req, res, next) => {
     // console.log(req.session);
@@ -89,7 +91,7 @@ app.get('/delete', async (req, res) => {
     await Request.deleteMany({});
     console.log('deleted');
 })
-app.get('/post', async (req, res) => {
+app.get('/post',catchAsync( async (req, res) => {
     const reqs = {
         address: "asdf asdfas fdsaf asdf",
         railway_line: "central",
@@ -102,9 +104,9 @@ app.get('/post', async (req, res) => {
     // const newReq=await Reuqest.find({}).populate('student');
     const newReq = new Request(reqs);
     await newReq.save();
-    console.log(newReq);
+    // console.log(newReq);
     res.send(newReq);
-})
+}))
 app.get('/showReq', async (req, res) => {
     const data = await Request.find({});
     res.send(data);
@@ -113,25 +115,25 @@ app.get('/showStudent', async (req, res) => {
     const data = await Request.find({});
     res.send(data);
 })
-app.get('/institute_view', async (req, res) => {
+app.get('/institute_view',catchAsync( async (req, res) => {
     // const StudentData=await Student.find({});
     const Requests = await Request.find({ "request_status": "false" }).populate(
         "student"
     );
     // console.log(StudentData);
     res.render('institute_view', { Requests });
-})
+}))
 
 
-app.get('/institute_view/aprroved', async (req, res) => {
+app.get('/institute_view/aprroved',catchAsync( async (req, res) => {
     const Requests = await Request.find({ request_status: true }).populate(
         "student"
     );
-    console.log(Requests);
+    // console.log(Requests);
     res.render('accepted', { Requests });
-})
+}))
 
-app.get('/institute_view/:id', async (req, res) => {
+app.get('/institute_view/:id',catchAsync( async (req, res) => {
     const id = req.params.id;
     const reqs = await Request.findById(id).populate('student');
     console.log(reqs);
@@ -139,28 +141,29 @@ app.get('/institute_view/:id', async (req, res) => {
 
     res.render('view', { reqs });
     
-})
-app.post('/deleteAP/:id', async (req, res) => {
+}))
+app.post('/deleteAP/:id',catchAsync( async (req, res) => {
     const id = req.params.id;
     await Request.findByIdAndDelete(id);
+    req.flash('success','request deleted');
     res.redirect('/institute_view');
-})
-app.get('/institute_view/approved/:id', async (req, res) => {
+}))
+app.get('/institute_view/approved/:id',catchAsync( async (req, res) => {
     const id = req.params.id;
     const reqs = await Request.findById(id).populate('student');
     // console.log(reqs);
     res.render('viewA', { reqs });
-})
+}))
 
-app.get('/institute_view/reverted/:id', async (req, res) => {
+app.get('/institute_view/reverted/:id',catchAsync( async (req, res) => {
     const req_id = req.params.id
     console.log(req_id);
     const request = await Request.findById(req_id).populate('student');
-    console.log(request);
+    // console.log(request);
     res.render('rejected', { request });
 
-})
-app.post('/institue_view/reverted/:id', async (req, res) => {
+}))
+app.post('/institue_view/reverted/:id',catchAsync( async (req, res) => {
     const req_id = req.params.id
     const request = await Request.findById(req_id).populate('student');
     const id = request.student._id;
@@ -175,12 +178,13 @@ app.post('/institue_view/reverted/:id', async (req, res) => {
     };
 
     sendMail(mailOptions);
+    req.flash('error','request has been reverted');
     res.redirect('/institute_view');
 
 
 
-})
-app.post('/institute_view/accepted/:id', async (req, res) => {
+}))
+app.post('/institute_view/accepted/:id',catchAsync( async (req, res) => {
     const req_id = req.params.id
     const request = await Request.findById(req_id).populate('student');
     request.request_status = true;
@@ -196,21 +200,22 @@ app.post('/institute_view/accepted/:id', async (req, res) => {
         html: `<p> Dear ${student.first_name} ${student.last_name}, your request for the railway concession has been approved.</p>  <p>You may now visit the Railway Concession Office and get your approved concession, duly stamped and signed. </p>`
     };
     approveMail(mailOptions);
+    req.flash('success','request has been approved');
     res.redirect('/institute_view');
 
 
-})
+}))
 
-app.post('/application', passport.authenticate('local', { failureFlash: true, failureRedirect: '/' }), async (req, res) => {
+app.post('/application', passport.authenticate('local', { failureFlash: true, failureRedirect: '/' }),catchAsync( async (req, res) => {
 
 
    
     const s = await Student.findOne({ username: req.session.passport.user });
    
     res.render('application', { id: s._id });
-});
+}));
 
-app.post('/application/basicdetails', isLoggedIn, async (req, res) => {
+app.post('/application/basicdetails', isLoggedIn,catchAsync( async (req, res) => {
     
     const user = await Student.findOne({ username: req.session.passport.user });
    
@@ -227,13 +232,13 @@ app.post('/application/basicdetails', isLoggedIn, async (req, res) => {
 
 
 
-})
-app.get('/application/uploaddoc/:id', isLoggedIn, async (req, res) => {
+}))
+app.get('/application/uploaddoc/:id', isLoggedIn,catchAsync( async (req, res) => {
 
     const st = await Student.findById(req.params.id);
    
     res.render('documents', { st });
-})
+}))
 app.post('/application/uploaddoc/:id', isLoggedIn, upload.array('image', 3), async (req, res) => {
     
     images = req.files.map(f => ({ url: f.path, filename: f.filename }));
@@ -308,7 +313,8 @@ app.get('/institute_login', async (req, res) => {
 
 
 app.post('/signup', async (req, res) => {
-    console.log(req.body);
+    try{
+    // console.log(req.body);
     // const student=await Student(req.body);
     // await student.save();
     // res.send(req.body);
@@ -327,8 +333,12 @@ app.post('/signup', async (req, res) => {
             html: `<p>Dear User, you have successfully registered on our portal.</p> <p> Your USERNAME is <strong>${registeredStudent.username}</strong> and your registered email id is <strong>${registeredStudent.email}</strong>.</p> <p> You can now login, to apply for your concession at <strong>Login </strong>. </p>`
         };
         sendMail(mailOptions);
-        res.send(registeredStudent);
-    })
+        // res.send(registeredStudent);
+        res.redirect('/');
+    })}catch{
+        req.flash('error', 'User already exits');
+        res.redirect('/signup');
+    }
 })
 app.get('/view', (req, res) => {
     res.render('view');

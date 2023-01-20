@@ -277,14 +277,18 @@ app.post('/application/conssesion/:id', isLoggedIn, async (req, res) => {
     // res.render('status',{});
     // res.send(request);
 
-    res.redirect(`/status/${request._id}`);
+    res.redirect(`/status/${student._id}`);
 
 
 })
 app.get('/status/:id', isLoggedIn, async (req, res) => {
     // const re = await Request.findById(req.params.id);
     const id=req.params.id;
-    const student=await Student.findById(id).populate('requests');
+    // console.log(id);
+    const student=await Student.findById(id).populate({
+        path:'requests'
+    });
+    // console.log('in status');
     // console.log(student);
     res.render('status', { student });
 })

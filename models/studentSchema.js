@@ -66,6 +66,12 @@ const studentSchema = new Schema({
                 url: String,
                 filename: String
         }
+],
+requests:[
+    {
+        type:Schema.Types.ObjectId,
+        ref:'Request'
+    }
 ]
 
 

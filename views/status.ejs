@@ -56,13 +56,21 @@
     <br>
     <div class="container" style="display: block; margin:auto">
         <header>Application Status</header>
+        <% for(let req of student.requests){ %> 
+        <div>
+
         <br>
-        <% if(re.request_status){ %> 
+      <% if(req.request_status==false){ %> 
         <div class="progress">
+          <%  if(req.date){ %>
+            <p>
+              <%= req.date %> 
+            </p>
+            <% } %> 
             <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <div style="text-align: center;">Application under process</div>
-        <% } else { %> 
+       <% }else{ %> 
         <div class="progress">           
             <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
@@ -70,6 +78,8 @@
         <% } %> 
         <br>
         <br>
+      </div>
+      <% } %> 
     </div>
 
   </body>

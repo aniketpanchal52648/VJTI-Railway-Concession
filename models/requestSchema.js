@@ -36,6 +36,10 @@ const requestSchema= new Schema({
     student:{
         type:Schema.Types.ObjectId,
         ref:'Student'
+    },
+    date:{
+        type:String,
+        require:true
     }
 
 });

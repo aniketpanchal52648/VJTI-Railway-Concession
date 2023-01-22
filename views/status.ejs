@@ -16,16 +16,40 @@
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
     <link rel="stylesheet" href="/stylesheets/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div style="display: block">
+    <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a style="padding-left: 7px;" class="navbar-brand">Home</a>
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" disabled>VJTI Railway Concession</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link">Status Page</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Status</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!-- <div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a style="padding-left: 7px;" class="navbar-brand" disabled>Railway Concession</a>
         <button
           class="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
@@ -36,7 +60,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="nav navbar-nav navbar-center">
             <li class="active">
-              <p style="margin-top: 17px;" class="nav-link">Status</p>
+              <p style="margin-top: 17px;" class="nav-link">Status Page</p>
             </li>
           </ul>
           <ul style="left: 95%;" class="nav navbar-nav navbar-right status">
@@ -53,8 +77,8 @@
       </nav>
     </div>
     <br>
-    <br>
-    <div class="container" style="display: block; margin:auto">
+    <br> -->
+    <div class="container" style="display: block; margin: 3rem auto 0rem">
         <header>Application Status</header>
         <% for(let req of student.requests){ %> 
         <div>
@@ -81,6 +105,6 @@
       </div>
       <% } %> 
     </div>
-
+    
   </body>
 </html>

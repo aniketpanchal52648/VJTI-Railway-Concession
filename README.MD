@@ -9,7 +9,7 @@ To run this app on your local machine, Fork the [repo](https://github.com/aniket
 
 Clone this repository into your folder of choice
 ---
-`` git clone https://github.com/aniketpanchal52648/RailGhateMe.git ``
+``git clone https://github.com/brupadhyay/VJTI-Railway-Concession.git ``
 
 Install Node Packages
 ---

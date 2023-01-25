@@ -22,6 +22,7 @@ const { storage } = require('./cloudinary/index');
 const upload = multer({ storage });
 const { approveMail } = require('./gmail/approved');
 const catchAsync=require('./utils/catchAsync');
+const { appliedMail } = require('./gmail/applied');
 
 
 
@@ -174,11 +175,11 @@ app.post('/institue_view/reverted/:id',catchAsync( async (req, res) => {
         to: student.email,
         subject: "Request Reverted",
         
-        html: `<p>Dear ${student.first_name} ${student.last_name}, your application for the concession has been reverted back due to the provided <strong> ${req.body.reason} ${req.body.reason1} </strong>.</p> <p> You may now check the status of the application and make the required changes and re-apply for the application. </p>`
+        html: `<p>Dear ${student.first_name} ${student.last_name}, your application for the concession has been reverted back due to the provided reason, <strong> ${req.body.reason} ${req.body.reason1} </strong>.</p> <p> You may now check the status of the application and make the required changes and re-apply for the application. </p>`
     };
 
     sendMail(mailOptions);
-    req.flash('error','request has been reverted');
+    req.flash('error','Request has been Reverted');
     res.redirect('/institute_view');
 
 
@@ -200,7 +201,7 @@ app.post('/institute_view/accepted/:id',catchAsync( async (req, res) => {
         html: `<p> Dear ${student.first_name} ${student.last_name}, your request for the railway concession has been approved.</p>  <p>You may now visit the Railway Concession Office and get your approved concession, duly stamped and signed. </p>`
     };
     approveMail(mailOptions);
-    req.flash('success','request has been approved');
+    req.flash('success','Request has been Approved');
     res.redirect('/institute_view');
 
 
@@ -269,13 +270,15 @@ app.post('/application/conssesion/:id', isLoggedIn, async (req, res) => {
         returnOriginal:false
     });
 
+    const mailOptions = {
+        from: "vjtirailwayconcession@gmail.com",
+        to: student.email,
+        subject: "Application Submitted",
+        // text: "Testing mail sending using NodeJS"
+        html: `<p> Dear ${student.first_name} ${student.last_name}, You have successfully applied for the Railway Concession.</p> <p> You can always view you status of the application at Website. </p>`
+    };
 
-    // console.log(request);
-    // console.log(student);
-    // res.send('done');
-    // res.redirect('/application');
-    // res.render('status',{});
-    // res.send(request);
+    appliedMail(mailOptions);
 
     res.redirect(`/status/${student._id}`);
 
@@ -293,6 +296,7 @@ app.get('/status/:id', isLoggedIn, async (req, res) => {
     res.render('status', { student });
 })
 app.get('/logout', isLoggedIn, async (req, res) => {
+
     req.logout(function (err) {
         if (err) {
             // req.flash('error', 'something went wrong');
@@ -301,7 +305,7 @@ app.get('/logout', isLoggedIn, async (req, res) => {
         }
 
 
-        // req.flash('success', 'Goodbye!!');
+        req.flash('success', 'You have successfully logged out');
         res.redirect('/');
     });
 
@@ -340,7 +344,7 @@ app.post('/signup', async (req, res) => {
         // res.send(registeredStudent);
         res.redirect('/');
     })}catch{
-        req.flash('error', 'User already exits');
+        req.flash('error', 'User already exists');
         res.redirect('/signup');
     }
 })

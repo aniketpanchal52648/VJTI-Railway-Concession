@@ -2,22 +2,23 @@
 
 ## <strong> > Installation
 ---
+Hey User, Welcome to the [Railway Concession App](https://github.com/aniketpanchal52648/VJTI-Railway-Concession)
 
-[Github Repo Link](https://github.com/aniketpanchal52648/RailGhateMe)
+To run this app on your local machine, 
 
-To run this app on your local machine, Fork the [repo](https://github.com/aniketpanchal52648/RailGhateMe)
+1. First things first, Fork the [Repository](https://github.com/aniketpanchal52648/VJTI-Railway-Concession)
 
-Clone this repository into your folder of choice
----
-``git clone https://github.com/brupadhyay/VJTI-Railway-Concession.git ``
+2. Clone this repository into your folder of choice
 
-Install Node Packages
----
-``npm install ``
+### `git clone https://github.com/aniketpanchal52648/VJTI-Railway-Concession.git`
 
-Run the App from root directory
----
-`node app.js`
+3. Install Node Packages
+
+### `npm install`
+
+4. Run the App from your ROOT Directory
+
+### `node app.js`
 
 ----
 

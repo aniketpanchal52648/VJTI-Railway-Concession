@@ -104,7 +104,7 @@ Concession Details Page (Student)
 
 ---
 
-**We really enjoyed the Centenary Hackhathon 2023 organised by GDSC and COC, hope to see more events in the future, and eager to participate in it.**
+**We really enjoyed the Centenary Hackathon 2023 organised by GDSC and COC, hope to see more events in the future, and eager to participate in it.**
 
 
 

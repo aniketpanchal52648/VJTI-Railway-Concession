@@ -3,7 +3,6 @@
 # Hey User, Welcome to the [Railway Concession App](https://vjti-railway-concession.live/)
 
 ## <strong> Installation </strong>
----
 
 To run this app on your local machine, 
 

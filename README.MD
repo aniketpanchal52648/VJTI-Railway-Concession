@@ -1,8 +1,11 @@
-# <strong>VJTI-RAILWAY-CONCESSION<strong>
+# <p align="center"> <strong>VJTI-RAILWAY-CONCESSION<strong>
 
-## <strong> > Installation
+## <strong> **⏬ Installation**
 ---
-Hey User, Welcome to the [Railway Concession App](https://github.com/aniketpanchal52648/VJTI-Railway-Concession)
+
+Hey Buddy, Welcome to the 
+[Railway Concession App](https://github.com/aniketpanchal52648/VJTI-Railway-Concession)
+
 
 To run this app on your local machine, 
 
@@ -10,19 +13,19 @@ To run this app on your local machine,
 
 2. Clone this repository into your folder of choice
 
-### `git clone https://github.com/aniketpanchal52648/VJTI-Railway-Concession.git`
+`git clone https://github.com/aniketpanchal52648/VJTI-Railway-Concession.git`
 
 3. Install Node Packages
 
-### `npm install`
+`npm install`
 
 4. Run the App from your ROOT Directory
 
-### `node app.js`
+`node app.js`
 
 ----
 
-## <strong>> Web App Details
+## <strong> **🚆Web App Details**
 
 Login Page
 
@@ -59,7 +62,7 @@ Concession Details Page (Student)
 --- 
 
 
-## <strong> > View Button Pages 
+## <strong> **📃 View Pages of Admin**
 
 ![img](appImage/viewBasic.png)
 
@@ -69,7 +72,7 @@ Concession Details Page (Student)
 
 ---
 
-## <strong> > Gmail Notifications Using NodeMailer:
+## <strong> **📧 Gmail Notifications Using NodeMailer**
 
 
 ![gmail](appImage/reqSuc.png)
